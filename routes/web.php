@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\FinancialYearController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,8 +31,6 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     })->name('dashboard');
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['is_admin']], function () {
-        Route::get('/financial_year', function () {
-            return Inertia::render('Admin/FinancialYears/Show');
-        })->name('financial_year.show');
+        Route::get('/financial_year', [FinancialYearController::class, 'index'])->name('financial_year.show');
     });
 });
