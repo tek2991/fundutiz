@@ -17,7 +17,7 @@ class CheckIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->email === config('app.admin_email')) {
+        if (Auth::user()->email === config('constants.admin_email')) {
             return $next($request);
         } else {
             return redirect('/');

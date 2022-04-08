@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['is_admin']], function () {
         Route::get('/financial_year', function () {
-            
+            return Inertia::render('Admin/FinancialYears/Show');
         })->name('financial_year.show');
     });
 });
