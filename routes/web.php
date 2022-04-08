@@ -24,12 +24,14 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
+Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified',]], function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['is_admin']], function () {
+        Route::get('/financial_year', function () {
+            
+        })->name('financial_year.show');
+    });
 });
