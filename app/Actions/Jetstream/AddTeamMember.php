@@ -35,7 +35,24 @@ class AddTeamMember implements AddsTeamMembers
             $newTeamMember, ['role' => $role]
         );
 
-        TeamMemberAdded::dispatch($team, $newTeamMember);
+        TeamMemberAdded::dispatch($newTeamMember, $newTeamMember);
+
+        $this->setCurrentTeamIfNotSet($newTeamMember, $team);
+    }
+
+    /**
+     * Set current team if not set.
+     *
+     * @param  mixed  $newTeamMember
+     * @param  mixed  $team_id
+     * @return void
+     */
+
+    public function setCurrentTeamIfNotSet($newTeamMember, $team){
+        if($newTeamMember->currentTeam()->exists() === false){
+            $newTeamMember->current_team_id = $team->id;
+            $newTeamMember->save();
+        }
     }
 
     /**

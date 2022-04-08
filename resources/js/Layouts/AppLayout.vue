@@ -58,7 +58,7 @@ const logout = () => {
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <div class="ml-3 relative">
                                 <!-- Teams Dropdown -->
-                                <JetDropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                                <JetDropdown v-if="$page.props.jetstream.hasTeamFeatures && $page.props.user.current_team" align="right" width="60">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
@@ -79,7 +79,7 @@ const logout = () => {
                                     <template #content>
                                         <div class="w-60">
                                             <!-- Team Management -->
-                                            <template v-if="$page.props.jetstream.hasTeamFeatures">
+                                            <template v-if="$page.props.jetstream.hasTeamFeatures && $page.props.user.current_team">
                                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                                     Manage Team
                                                 </div>
@@ -89,7 +89,7 @@ const logout = () => {
                                                     Team Settings
                                                 </JetDropdownLink>
 
-                                                <JetDropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">
+                                                <JetDropdownLink v-if="$page.props.jetstream.canCreateTeams && $page.props.is_admin" :href="route('teams.create')">
                                                     Create New Team
                                                 </JetDropdownLink>
 
@@ -247,7 +247,7 @@ const logout = () => {
                             </form>
 
                             <!-- Team Management -->
-                            <template v-if="$page.props.jetstream.hasTeamFeatures">
+                            <template v-if="$page.props.jetstream.hasTeamFeatures && $page.props.user.current_team">
                                 <div class="border-t border-gray-200" />
 
                                 <div class="block px-4 py-2 text-xs text-gray-400">
@@ -259,7 +259,7 @@ const logout = () => {
                                     Team Settings
                                 </JetResponsiveNavLink>
 
-                                <JetResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')" :active="route().current('teams.create')">
+                                <JetResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams  && $page.props.is_admin" :href="route('teams.create')" :active="route().current('teams.create')">
                                     Create New Team
                                 </JetResponsiveNavLink>
 
