@@ -1,21 +1,41 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
+import AppLayout from "@/Layouts/AppLayout.vue";
+import ButtonLink from "@/Jetstream/ButtonLink.vue";
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Financial Years
-            </h2>
-        </template>
+  <AppLayout title="Dashboard">
+    <template #header>
+      <span class="flex justify-between">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+          Financial Years
+        </h2>
+        <ButtonLink href="#">Create</ButtonLink>
+      </span>
+    </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    Visible only for the Administrator
-                </div>
+    <div class="py-12">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+          <div class="">
+            <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+              <div class="mt-8 text-2xl">
+                Welcome to your Jetstream application!
+              </div>
+
+              <div class="mt-6 text-gray-500">
+                Laravel Jetstream provides a beautiful, robust starting point
+                for your next Laravel application. Laravel is designed to help
+                you build your application using a development environment that
+                is simple, powerful, and enjoyable. We believe you should love
+                expressing your creativity through programming, so we have spent
+                time carefully crafting the Laravel ecosystem to be a breath of
+                fresh air. We hope you love it.
+              </div>
             </div>
+          </div>
         </div>
-    </AppLayout>
+      </div>
+    </div>
+  </AppLayout>
 </template>
