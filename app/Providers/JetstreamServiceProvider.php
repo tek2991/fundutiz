@@ -2,15 +2,16 @@
 
 namespace App\Providers;
 
-use App\Actions\Jetstream\AddTeamMember;
+use Laravel\Jetstream\Jetstream;
 use App\Actions\Jetstream\CreateTeam;
 use App\Actions\Jetstream\DeleteTeam;
 use App\Actions\Jetstream\DeleteUser;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
+use App\Actions\Jetstream\AddTeamMember;
+use App\Actions\Jetstream\UpdateTeamName;
 use App\Actions\Jetstream\InviteTeamMember;
 use App\Actions\Jetstream\RemoveTeamMember;
-use App\Actions\Jetstream\UpdateTeamName;
-use Illuminate\Support\ServiceProvider;
-use Laravel\Jetstream\Jetstream;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,7 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Jetstream::ignoreRoutes();
     }
 
     /**
@@ -40,6 +41,8 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::removeTeamMembersUsing(RemoveTeamMember::class);
         Jetstream::deleteTeamsUsing(DeleteTeam::class);
         Jetstream::deleteUsersUsing(DeleteUser::class);
+
+        $this->configureRoutes();
     }
 
     /**
@@ -63,5 +66,21 @@ class JetstreamServiceProvider extends ServiceProvider
             'create',
             'update',
         ])->description('Editor users have the ability to read, create, and update.');
+    }
+
+    /**
+     * Configure the routes offered by the application.
+     *
+     * @return void
+     */
+    protected function configureRoutes()
+    {
+        Route::group([
+            'namespace' => 'Laravel\Jetstream\Http\Controllers',
+            'domain' => config('jetstream.domain', null),
+            'prefix' => config('jetstream.prefix', config('jetstream.path')),
+        ], function () {
+            $this->loadRoutesFrom(base_path('routes/jetstream.php'));
+        });
     }
 }
