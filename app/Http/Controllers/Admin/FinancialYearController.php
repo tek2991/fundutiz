@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\FinancialYear;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\FinancialYearResource;
 use Inertia\Inertia;
 
 class FinancialYearController extends Controller
@@ -16,12 +17,7 @@ class FinancialYearController extends Controller
      */
     public function index()
     {
-        $financialYears = FinancialYear::orderBy('is_active', 'desc')->orderBy('updated_at', 'desc')->paginate()->through(fn($item) => [
-            'id' => $item->id,
-            'name' => $item->name,
-            'is_active' => $item->is_active,
-            'created_at' => $item->created_at->format('Y-m-d'),
-        ]);
+        $financialYears = FinancialYearResource::collection(FinancialYear::orderBy('is_active', 'desc')->orderBy('updated_at', 'desc')->paginate());
         return Inertia::render('Admin/FinancialYears/Index', compact('financialYears'));
     }
 
@@ -78,7 +74,9 @@ class FinancialYearController extends Controller
      */
     public function edit(FinancialYear $financialYear)
     {
-        $currentFinancialYear = FinancialYear::where('is_active', true)->first();
+        $currentFinancialYear = new FinancialYearResource(FinancialYear::where('is_active', true)->first());
+        $financialYear = new FinancialYearResource($financialYear);
+
         return Inertia::render('Admin/FinancialYears/Edit', compact('financialYear', 'currentFinancialYear'));
     }
 
@@ -102,7 +100,7 @@ class FinancialYearController extends Controller
 
         if ($request->is_active === true) {
             $financialYear->activate();
-        }else{
+        } else {
             $financialYear->deactivate();
         }
 
