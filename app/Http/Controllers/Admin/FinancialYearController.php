@@ -45,14 +45,14 @@ class FinancialYearController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'active' => ['nullable', 'boolean'],
+            'is_active' => ['nullable', 'boolean'],
         ]);
 
         $financialYear = FinancialYear::create([
             'name' => $request->name,
         ]);
 
-        if ($request->active) {
+        if ($request->is_active === true) {
             $financialYear->activate();
         }
 
@@ -78,7 +78,8 @@ class FinancialYearController extends Controller
      */
     public function edit(FinancialYear $financialYear)
     {
-        //
+        $currentFinancialYear = FinancialYear::where('is_active', true)->first();
+        return Inertia::render('Admin/FinancialYears/Edit', compact('financialYear', 'currentFinancialYear'));
     }
 
     /**
@@ -90,7 +91,22 @@ class FinancialYearController extends Controller
      */
     public function update(Request $request, FinancialYear $financialYear)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'is_active' => ['nullable', 'boolean'],
+        ]);
+
+        $financialYear->update([
+            'name' => $request->name,
+        ]);
+
+        if ($request->is_active === true) {
+            $financialYear->activate();
+        }else{
+            $financialYear->deactivate();
+        }
+
+        return redirect()->route('admin.financial_year.index')->banner("Financial year updated successfully");
     }
 
     /**
