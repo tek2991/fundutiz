@@ -22395,19 +22395,34 @@ __webpack_require__.r(__webpack_exports__);
     var props = __props;
     var excluded_labels = ["&laquo; Previous", "Next &raquo;"];
     var paginator = {
+      data_count: props.pagination.data.length,
       has_pages: props.pagination.last_page > 1,
       on_first_page: props.pagination.current_page === 1,
       on_last_page: props.pagination.current_page === props.pagination.last_page,
       has_more_pages: props.pagination.current_page < props.pagination.last_page,
       prev_page_url: props.pagination.prev_page_url,
       next_page_url: props.pagination.next_page_url,
-      data_count: props.pagination.data.length,
       showing_from: props.pagination.from,
       showing_to: props.pagination.to,
       total: props.pagination.total,
-      links: props.pagination.links,
-      current_page: props.pagination.current_page
-    };
+      current_page: props.pagination.current_page,
+      links: props.pagination.links
+    }; // If JSON wrapping disabled then Laravel returns meta object
+
+    if (props.pagination.meta) {
+      paginator.has_pages = props.pagination.meta.last_page > 1;
+      paginator.on_first_page = props.pagination.meta.current_page === 1;
+      paginator.on_last_page = props.pagination.meta.current_page === props.pagination.meta.last_page;
+      paginator.has_more_pages = props.pagination.meta.current_page < props.pagination.meta.last_page;
+      paginator.prev_page_url = props.pagination.meta.prev_page_url;
+      paginator.next_page_url = props.pagination.meta.next_page_url;
+      paginator.showing_from = props.pagination.meta.from;
+      paginator.showing_to = props.pagination.meta.to;
+      paginator.total = props.pagination.meta.total;
+      paginator.current_page = props.pagination.meta.current_page;
+      paginator.links = props.pagination.meta.links;
+    }
+
     var __returned__ = {
       props: props,
       excluded_labels: excluded_labels,
