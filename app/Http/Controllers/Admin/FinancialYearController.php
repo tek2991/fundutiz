@@ -22,7 +22,7 @@ class FinancialYearController extends Controller
             'is_active' => $item->is_active,
             'created_at' => $item->created_at->format('Y-m-d'),
         ]);
-        return Inertia::render('Admin/FinancialYears/Show', compact('financialYears'));
+        return Inertia::render('Admin/FinancialYears/Index', compact('financialYears'));
     }
 
     /**
