@@ -6,10 +6,7 @@ const props = defineProps({
     pagination: Object,
 });
 
-const excluded_labels = [
-    "&laquo; Previous",
-    "Next &raquo;",
-]
+const excluded_labels = ["&laquo; Previous", "Next &raquo;"];
 
 let paginator = {
     has_pages: props.pagination.last_page > 1,
@@ -128,11 +125,18 @@ let paginator = {
 
                     <!-- Array Of Links -->
                     <span v-for="link in paginator.links" :key="link.label">
-                        <span v-if="excluded_labels.includes(link.label) != true">
+                        <span
+                            v-if="excluded_labels.includes(link.label) != true">
                             <span
-                                v-if="
-                                    link.active == true || link.label == '...'
-                                "
+                                v-if="link.active == true"
+                                aria-current="page">
+                                <span
+                                    class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-semibold text-white bg-gray-500 border border-gray-500 cursor-default leading-5"
+                                    >{{ link.label }}</span
+                                >
+                            </span>
+                            <span
+                                v-else-if="link.label == '...'"
                                 aria-current="page">
                                 <span
                                     class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5"
@@ -141,7 +145,7 @@ let paginator = {
                             </span>
                             <Link
                                 v-else
-                                :href="link.url"
+                                :href="link.url ? link.url : ''"
                                 class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
                                 :aria-label="`Go to page :page ${link.label}`">
                                 {{ link.label }}
