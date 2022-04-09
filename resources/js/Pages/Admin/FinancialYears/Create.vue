@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import CreateFinancialYearForm from '@/Pages/Admin/FinancialYears/Partials/CreateFinancialYearForm.vue';
 </script>
 
 <template>
@@ -12,7 +13,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                Create Financial Year
+                <CreateFinancialYearForm />
             </div>
         </div>
     </AppLayout>

@@ -27,4 +27,15 @@ class FinancialYear extends Model
         'name',
         'is_active',
     ];
+
+    /**
+     * Active the financial year.
+     *
+     * @return void
+     */
+    public function activate()
+    {
+        FinancialYear::where('is_active', true)->update(['is_active' => false]);
+        $this->update(['is_active' => true]);
+    }
 }

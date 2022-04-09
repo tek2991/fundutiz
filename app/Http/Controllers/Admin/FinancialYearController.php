@@ -43,7 +43,20 @@ class FinancialYearController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'active' => ['nullable', 'boolean'],
+        ]);
+
+        $financialYear = FinancialYear::create([
+            'name' => $request->name,
+        ]);
+
+        if ($request->active) {
+            $financialYear->activate();
+        }
+
+        return redirect()->route('admin.financial_year.index')->banner("New financial year created successfully");
     }
 
     /**
