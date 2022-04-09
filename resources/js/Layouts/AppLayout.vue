@@ -8,6 +8,7 @@ import JetDropdown from '@/Jetstream/Dropdown.vue';
 import JetDropdownLink from '@/Jetstream/DropdownLink.vue';
 import JetNavLink from '@/Jetstream/NavLink.vue';
 import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue';
+import SuccessBadge from '@/Icons/SuccessBadge.vue';
 
 defineProps({
     title: String,
@@ -109,16 +110,7 @@ const logout = () => {
                                                     <form @submit.prevent="switchToTeam(team)">
                                                         <JetDropdownLink as="button">
                                                             <div class="flex items-center">
-                                                                <svg
-                                                                    v-if="team.id == $page.props.user.current_team_id"
-                                                                    class="mr-2 h-5 w-5 text-green-400"
-                                                                    fill="none"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round"
-                                                                    stroke-width="2"
-                                                                    stroke="currentColor"
-                                                                    viewBox="0 0 24 24"
-                                                                ><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                                <SuccessBadge v-if="team.id == $page.props.user.current_team_id" />
                                                                 <div>{{ team.name }}</div>
                                                             </div>
                                                         </JetDropdownLink>

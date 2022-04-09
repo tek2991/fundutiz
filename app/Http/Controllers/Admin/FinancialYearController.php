@@ -16,7 +16,12 @@ class FinancialYearController extends Controller
      */
     public function index()
     {
-        $financialYears = FinancialYear::paginate();
+        $financialYears = FinancialYear::orderBy('is_active', 'desc')->orderBy('updated_at', 'desc')->paginate()->through(fn($item) => [
+            'id' => $item->id,
+            'name' => $item->name,
+            'is_active' => $item->is_active,
+            'created_at' => $item->created_at->format('Y-m-d'),
+        ]);
         return Inertia::render('Admin/FinancialYears/Show', compact('financialYears'));
     }
 

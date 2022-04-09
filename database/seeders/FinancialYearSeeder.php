@@ -15,7 +15,7 @@ class FinancialYearSeeder extends Seeder
      */
     public function run()
     {
-        FinancialYear::factory(25)->create([
+        FinancialYear::factory(250)->create([
             'is_active' => false,
         ]);
         FinancialYear::factory(1)->create([

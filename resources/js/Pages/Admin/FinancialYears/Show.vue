@@ -1,8 +1,13 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import ButtonLink from "@/Jetstream/ButtonLink.vue";
+import SimpleLink from "@/Jetstream/SimpleLink.vue";
+import Pagination from "@/Jetstream/Pagination.vue";
+import SuccessBadge from "@/Icons/SuccessBadge.vue";
 
-// const data = this.$page.props.props.financialYears.data;
+defineProps({
+    financialYears: Object,
+});
 </script>
 
 <template>
@@ -16,11 +21,10 @@ import ButtonLink from "@/Jetstream/ButtonLink.vue";
             </span>
         </template>
 
-        <div class="py-12">
+        <div class="pt-12 sm:py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="">
-                        <!-- <div class="p-6 sm:px-20 bg-white border-b border-gray-200"> -->
                         <div class="flex flex-col">
                             <div
                                 class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -29,17 +33,17 @@ import ButtonLink from "@/Jetstream/ButtonLink.vue";
                                     <div
                                         class="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
                                         <table
-                                            class="min-w-full divide-y divide-gray-200 table-auto">
+                                            class="min-w-full divide-y divide-gray-200 table-auto border-b">
                                             <thead class="bg-gray-50">
                                                 <tr>
                                                     <th
                                                         scope="col"
-                                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                                                         Financial Year
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        class="truncate px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        class="truncate px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                                                         Created at
                                                     </th>
                                                     <th
@@ -54,12 +58,12 @@ import ButtonLink from "@/Jetstream/ButtonLink.vue";
                                             <tbody
                                                 class="bg-white divide-y divide-gray-200">
                                                 <tr
-                                                    v-for="item in $page.props
-                                                        .financialYears.data"
+                                                    v-for="item in financialYears.data"
                                                     :key="item.id"
                                                     class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <SuccessBadge v-if="item.is_active == true" />
                                                         {{ item.name }}
                                                     </td>
                                                     <td
@@ -68,19 +72,21 @@ import ButtonLink from "@/Jetstream/ButtonLink.vue";
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <ButtonLink href="#">
+                                                        <SimpleLink href="#">
                                                             Edit
-                                                        </ButtonLink>
+                                                        </SimpleLink>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="py-6 px-6">
+                                            <Pagination
+                                                :pagination="financialYears" />
+                                        </div>
                                     </div>
-                                    <div class="mt-4">Paginator</div>
                                 </div>
                             </div>
                         </div>
-                        <!-- </div> -->
                     </div>
                 </div>
             </div>
