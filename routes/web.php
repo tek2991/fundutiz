@@ -31,6 +31,6 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     })->name('dashboard');
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['is_admin']], function () {
-        Route::get('/financial_year', [FinancialYearController::class, 'index'])->name('financial_year.index');
+        Route::resource('financial_year', FinancialYearController::class)->only('index', 'create');
     });
 });

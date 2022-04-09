@@ -17,7 +17,7 @@ defineProps({
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Financial Years
                 </h2>
-                <ButtonLink href="#">Create</ButtonLink>
+                <ButtonLink :href="route('admin.financial_year.create')">Create</ButtonLink>
             </span>
         </template>
 
