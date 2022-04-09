@@ -73,8 +73,9 @@ class FinancialYearController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(FinancialYear $financialYear)
-    {
-        $currentFinancialYear = new FinancialYearResource(FinancialYear::where('is_active', true)->first());
+    {   
+        $activeFinancialYear = FinancialYear::where('is_active', true)->first();
+        $currentFinancialYear = $activeFinancialYear ? new FinancialYearResource(FinancialYear::where('is_active', true)->first()) : null;
         $financialYear = new FinancialYearResource($financialYear);
 
         return Inertia::render('Admin/FinancialYears/Edit', compact('financialYear', 'currentFinancialYear'));
