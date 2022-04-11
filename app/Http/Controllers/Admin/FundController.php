@@ -28,7 +28,7 @@ class FundController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Funds/Create');
     }
 
     /**
@@ -39,7 +39,11 @@ class FundController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Fund::create($request->validate([
+            'name' => 'required|string|max:255',
+        ]));
+
+        return redirect()->route('admin.fund.index')->with('success', 'Fund created successfully.');
     }
 
     /**
