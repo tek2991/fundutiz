@@ -41,4 +41,11 @@ class Team extends JetstreamTeam
         'updated' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
+
+    /**
+     * Get the funds for the team.
+     */
+    public function funds(){
+        return $this->belongsToMany(Fund::class);
+    }
 }
