@@ -65,7 +65,8 @@ class FundController extends Controller
      */
     public function edit(Fund $fund)
     {
-        //
+        $fund = new FundResource($fund);
+        return Inertia::render('Admin/Funds/Edit', compact('fund'));
     }
 
     /**

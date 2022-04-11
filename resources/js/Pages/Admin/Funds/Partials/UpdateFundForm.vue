@@ -5,22 +5,20 @@ import JetFormSection from "@/Jetstream/FormSection.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import JetInputError from "@/Jetstream/InputError.vue";
 import JetLabel from "@/Jetstream/Label.vue";
-import JetCheckbox from "@/Jetstream/Checkbox.vue";
+// import JetCheckbox from "@/Jetstream/Checkbox.vue";
 import WarningBadge from "@/Icons/WarningBadge.vue";
 
 const props = defineProps({
-    currentFinancialYear: Object,
-    financialYear: Object,
+    fund: Object,
 });
 
 const form = useForm({
-    name: props.financialYear.name,
-    is_active: props.financialYear.is_active,
+    name: props.fund.name,
 });
 
 const submit = () => {
-    form.put(route("admin.financial_year.update", props.financialYear.id), {
-        errorBag: "updateFinancialYear",
+    form.put(route("admin.fund.update", props.fund.id), {
+        errorBag: "updateFund",
         preserveScroll: true,
     });
 };
@@ -31,28 +29,12 @@ const submit = () => {
         <template #title> Update Financial Year Details </template>
 
         <template #description>
-            If set as active it will be the default financial year for the
-            company.
+            Update the details of the Head of Account.
         </template>
 
         <template #form>
-            <div class="col-span-6">
-                <JetLabel value="Current Financial Year" />
-
-                <div class="flex items-center mt-2">
-                    <div class="ml-4 leading-tight" v-if="currentFinancialYear">
-                        <div>{{ currentFinancialYear.name }}</div>
-                        <div class="text-sm text-gray-700">
-                            {{ currentFinancialYear.created_at }}
-                        </div>
-                    </div>
-                    <div class="leading-tight" v-else>
-                        <div> <WarningBadge /> Not Found!</div>
-                    </div>
-                </div>
-            </div>
             <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="name" value="Financial Year" />
+                <JetLabel for="name" value="Fund" />
                 <JetInput
                     id="name"
                     v-model="form.name"
@@ -61,7 +43,7 @@ const submit = () => {
                     autofocus />
                 <JetInputError :message="form.errors.name" class="mt-2" />
             </div>
-            <div class="col-span-6 sm:col-span-4">
+            <!-- <div class="col-span-6 sm:col-span-4">
                 <JetLabel
                     for="name"
                     value="Set as active (All transancations will be created in this financial year.)" />
@@ -69,7 +51,7 @@ const submit = () => {
                     id="is_active"
                     v-model:checked="form.is_active"
                     name="is_active" />
-            </div>
+            </div> -->
         </template>
 
         <template #actions>

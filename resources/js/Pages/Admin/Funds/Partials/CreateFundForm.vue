@@ -10,7 +10,7 @@ const form = useForm({
     name: "",
 });
 
-const createFund = () => {
+const submit = () => {
     form.post(route("admin.fund.store"), {
         errorBag: "createFund",
         preserveScroll: true,
@@ -19,7 +19,7 @@ const createFund = () => {
 </script>
 
 <template>
-    <JetFormSection @submitted="createFund">
+    <JetFormSection @submitted="submit">
         <template #title> Financial Fund </template>
 
         <template #description>

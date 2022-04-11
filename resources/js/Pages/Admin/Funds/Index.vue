@@ -72,7 +72,7 @@ defineProps({
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <SimpleLink :href="route('admin.financial_year.edit', item.id)">
+                                                        <SimpleLink :href="route('admin.fund.edit', item.id)">
                                                             Edit
                                                         </SimpleLink>
                                                     </td>
