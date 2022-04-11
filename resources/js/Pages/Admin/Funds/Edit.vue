@@ -1,10 +1,15 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import UpdateFundForm from '@/Pages/Admin/Funds/Partials/UpdateFundForm.vue';
+import AppLayout from "@/Layouts/AppLayout.vue";
+import UpdateFundForm from "@/Pages/Admin/Funds/Partials/UpdateFundForm.vue";
+import { computed } from "vue";
 
-defineProps({
+const props = defineProps({
     fund: Object,
+    assignedTeams: Array,
+    user: Object,
 });
+
+const allTeams = computed(() => props.user.all_teams);
 </script>
 
 <template>
@@ -17,7 +22,10 @@ defineProps({
 
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <UpdateFundForm :fund="fund" />
+                <UpdateFundForm
+                    :fund="fund"
+                    :assignedTeams="assignedTeams"
+                    :allTeams="allTeams" />
             </div>
         </div>
     </AppLayout>
