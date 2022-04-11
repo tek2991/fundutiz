@@ -23028,7 +23028,7 @@ __webpack_require__.r(__webpack_exports__);
       is_active: false
     });
 
-    var createTeam = function createTeam() {
+    var createFinancialYear = function createFinancialYear() {
       form.post(route("admin.financial_year.store"), {
         errorBag: "createFinancialYear",
         preserveScroll: true
@@ -23037,7 +23037,7 @@ __webpack_require__.r(__webpack_exports__);
 
     var __returned__ = {
       form: form,
-      createTeam: createTeam,
+      createFinancialYear: createFinancialYear,
       useForm: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm,
       JetButton: _Jetstream_Button_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
       JetFormSection: _Jetstream_FormSection_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -27868,7 +27868,7 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["JetFormSection"], {
-    onSubmitted: $setup.createTeam
+    onSubmitted: $setup.createFinancialYear
   }, {
     title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];

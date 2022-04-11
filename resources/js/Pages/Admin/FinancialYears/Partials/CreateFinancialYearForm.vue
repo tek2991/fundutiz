@@ -12,7 +12,7 @@ const form = useForm({
     is_active: false,
 });
 
-const createTeam = () => {
+const createFinancialYear = () => {
     form.post(route("admin.financial_year.store"), {
         errorBag: "createFinancialYear",
         preserveScroll: true,
@@ -21,7 +21,7 @@ const createTeam = () => {
 </script>
 
 <template>
-    <JetFormSection @submitted="createTeam">
+    <JetFormSection @submitted="createFinancialYear">
         <template #title> Financial Year Details </template>
 
         <template #description>
