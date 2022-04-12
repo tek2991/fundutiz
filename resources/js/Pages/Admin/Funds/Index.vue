@@ -79,7 +79,7 @@ defineProps({
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <div v-if="funds.meta.total > 1" class="py-6 px-6">
+                                        <div v-if="funds.meta.last_page > 1" class="py-6 px-6">
                                             <Pagination
                                                 :pagination="funds" />
                                         </div>
