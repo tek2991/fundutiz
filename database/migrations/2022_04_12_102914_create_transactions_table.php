@@ -28,8 +28,8 @@ return new class extends Migration
             $table->string('non_gem_remark')->nullable();
             $table->boolean('gem_non_availability')->nullable();
             $table->string('gem_non_availability_remark')->nullable();
-            $table->foreignId('creator_user_id')->constrained('users');
-            $table->foreignId('updator_user_id')->constrained('users');
+            $table->foreignId('sanctioner_id')->nullable()->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
