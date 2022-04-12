@@ -17,21 +17,23 @@ const props = defineProps({
 
 const form = useForm({
     name: props.fund.name,
-    teams: [],
+    teams: {},
 });
 
 props.allTeams.forEach((team) => {
-    form.teams[team.id] = false;
+    form.teams[team.id] = props.assignedTeams.some((assignedTeam) => assignedTeam.id === team.id);
 });
 
-const select_all = ref(false);
+const select_all = ref(props.assignedTeams.length === props.allTeams.length);
 
-watch(() => select_all.value, (value) => {
-    form.teams.forEach((_, index) => {
-        form.teams[index] = value;
-    });
-});
-
+watch(
+    () => select_all.value,
+    (value) => {
+        for (const team of props.allTeams) {
+            form.teams[team.id] = value;
+        }
+    }
+);
 
 const submit = () => {
     form.put(route("admin.fund.update", props.fund.id), {
@@ -65,9 +67,7 @@ const submit = () => {
             </div>
             <div class="col-span-12 flex gap-2">
                 <JetLabel for="select_all" value="Select All" />
-                <JetCheckbox
-                    id="select_all"
-                    v-model:checked="select_all" />
+                <JetCheckbox id="select_all" v-model:checked="select_all" />
             </div>
             <div
                 class="col-span-6 sm:col-span-4 flex gap-2"
@@ -78,6 +78,9 @@ const submit = () => {
                     id="`team_${team.id}`"
                     v-model:checked="form.teams[team.id]"
                     name="teams[]" />
+            </div>
+            <div class="col-span-12">
+                <JetInputError :message="form.errors.teams" />
             </div>
         </template>
 

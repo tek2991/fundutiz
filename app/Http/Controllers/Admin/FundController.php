@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\FundResource;
+use App\Rules\TeamObjectRule;
 
 class FundController extends Controller
 {
@@ -79,7 +80,24 @@ class FundController extends Controller
      */
     public function update(Request $request, Fund $fund)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'teams' => ['bail', 'nullable', 'array', new TeamObjectRule],
+        ]);
+
+        $fund->update([
+            'name' => $request->name,
+        ]);
+
+        $teams = [];
+        if ($request->teams) {
+            foreach ($request->teams as $team => $status) {
+                $status == true ? $teams[] = $team : null;
+            }
+        }
+        $fund->teams()->sync($teams);
+
+        return redirect()->route('admin.fund.index')->with('success', 'Fund updated successfully.');
     }
 
     /**
