@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('fund_id')->constrained();
             $table->foreignId('team_id')->constrained();
-            $table->softDeletes();
-            $table->timestamps();
         });
     }
 
