@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\Admin\FundController;
+use App\Http\Controllers\Admin\SanctionerController;
 use App\Http\Controllers\Admin\FinancialYearController;
 
 /*
@@ -34,5 +35,6 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['is_admin']], function () {
         Route::resource('financial_year', FinancialYearController::class)->only('index', 'create', 'store', 'edit', 'update');
         Route::resource('fund', FundController::class)->only('index', 'create', 'store', 'edit', 'update', 'destroy');
+        Route::resource('sanctioner', SanctionerController::class)->only('index', 'create', 'store', 'edit', 'update');
     });
 });

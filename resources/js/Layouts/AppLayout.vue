@@ -60,6 +60,11 @@ const logout = () => {
                                 </JetNavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <JetNavLink :href="route('admin.sanctioner.index')" :active="route().current('admin.sanctioner.*')">
+                                    Sanctioning Authorities
+                                </JetNavLink>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <JetNavLink :href="route('admin.financial_year.index')" :active="route().current('admin.financial_year.*')">
                                     FI Year
                                 </JetNavLink>
@@ -218,6 +223,11 @@ const logout = () => {
                     <div class="pt-2 pb-3 space-y-1">
                         <JetResponsiveNavLink :href="route('admin.fund.index')" :active="route().current('admin.fund.*')">
                             Fund
+                        </JetResponsiveNavLink>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
+                        <JetResponsiveNavLink :href="route('admin.sanctioner.index')" :active="route().current('admin.sanctioner.*')">
+                            Sanctioning Authorities
                         </JetResponsiveNavLink>
                     </div>
                     <div class="pt-2 pb-3 space-y-1">
