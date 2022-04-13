@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('team_id')->constrained();
             $table->string('type');
             $table->string('status')->nullable();
-            $table->date('sactioned_at');
+            $table->date('sanctioned_at');
             $table->bigInteger('amount_in_cents');
             $table->string('item')->nullable();
             $table->string('vendor_name')->nullable();
@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('gem_non_availability_remark')->nullable();
             $table->foreignId('sanctioner_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('financial_year_id')->constrained();
             $table->timestamps();
         });
     }
