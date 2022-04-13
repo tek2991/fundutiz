@@ -47,6 +47,24 @@ class Transaction extends Model
     ];
 
     /**
+     * Append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'amount',
+    ];
+
+    /**
+     * Hide the model's attributes for serialization.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'amount_in_cents',
+    ];
+
+    /**
      * Get the fund for the transaction.
      *
      */
