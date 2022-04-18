@@ -5,15 +5,19 @@ import JetTabButton from "@/Jetstream/TabButton.vue";
 import CreateAllocationForm from "@/Pages/Admin/Transactions/Partials/CreateAllocationForm.vue";
 import CreateUtilizationForm from "@/Pages/Admin/Transactions/Partials/CreateUtilizationForm.vue";
 
-const selectedTab = ref("allocation");
+const selectedTab = ref("utilization");
 const setTab = value => selectedTab.value = value;
+defineProps({
+    funds: Object,
+    sanctioners: Object,
+});
 </script>
 
 <template>
     <AppLayout title="Create Team">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Create Transactions
+                Create Transactions ({{ $page.props.user.current_team ? $page.props.user.current_team.name : 'No Team!' }})
             </h2>
         </template>
 
@@ -24,22 +28,22 @@ const setTab = value => selectedTab.value = value;
                     <ul class="flex flex-wrap -mb-px text-center">
                         <li class="mr-2">
                             <JetTabButton
-                                @click="tab = setTab('allocation')"
-                                :active="selectedTab == 'allocation'">
-                                Allocation
-                            </JetTabButton>
-                        </li>
-                        <li class="mr-2">
-                            <JetTabButton
                                 @click="tab = setTab('utilization')"
                                 :active="selectedTab == 'utilization'">
                                 Utilization
                             </JetTabButton>
                         </li>
+                        <li class="mr-2">
+                            <JetTabButton
+                                @click="tab = setTab('allocation')"
+                                :active="selectedTab == 'allocation'">
+                                Allocation
+                            </JetTabButton>
+                        </li>
                     </ul>
                     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                         <CreateAllocationForm v-if="selectedTab == 'allocation'"></CreateAllocationForm>
-                        <CreateUtilizationForm v-else></CreateUtilizationForm>
+                        <CreateUtilizationForm v-else :funds="funds" :sanctioners="sanctioners"></CreateUtilizationForm>
                     </div>
                 </div>
             </div>

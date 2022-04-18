@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
+use App\Models\Sanctioner;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\FundResource;
+use App\Http\Resources\v1\SanctionerResource;
 use App\Http\Resources\v1\TransactionResource;
 
 class TransactionController extends Controller
@@ -28,7 +31,10 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Transactions/Create');
+        $current_team = auth()->user()->currentTeam;
+        $funds = FundResource::collection($current_team->funds);
+        $sanctioners = SanctionerResource::collection(Sanctioner::all());
+        return Inertia::render('Admin/Transactions/Create', compact('funds', 'sanctioners'));
     }
 
     /**
