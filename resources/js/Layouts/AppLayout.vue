@@ -55,7 +55,7 @@ const logout = () => {
                                 </JetNavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <JetNavLink :href="route('admin.transaction.index')" :active="route().current('admin.transaction.index')">
+                                <JetNavLink :href="route('admin.transaction.index')" :active="route().current('admin.transaction.*')">
                                     Transactions
                                 </JetNavLink>
                             </div>
