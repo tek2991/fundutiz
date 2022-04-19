@@ -16,58 +16,48 @@ const props = defineProps({
 
 const form = useForm({
     fund_id: "",
-    // team_id : "",
-    // type : "",
-    status: "",
+    type: "utilization",
+    status: "incured",
     sanctioned_at: "",
     amount: "",
     item: "",
     vendor_name: "",
     file_number: "",
-    is_gem: "yes",
+    is_gem: "1",
     non_gem_remark: "",
     gem_non_availability: "",
     gem_non_availability_remark: "",
     sanctioner_id: "",
-    // user_id : "",
-    // financial_year_i_idd : "",
 });
 
 const submit = () => {
-    form.post(route("admin.sanctioner.store"), {
-        errorBag: "createSanctioner",
-        preserveScroll: true,
+    form.post(route("admin.transaction.store"), {
+        errorBag: "createUtilizationTransaction",
     });
 };
 
-const isGEM = computed(() => form.is_gem === "yes");
-const isNotAvailableInGEM = computed(() => form.gem_non_availability === "yes");
-const isOtherReason = computed(() => form.gem_non_availability === "no");
+const isGEM = computed(() => form.is_gem === "1");
+const isNotAvailableInGEM = computed(() => form.gem_non_availability === "1");
+const isOtherReason = computed(() => form.gem_non_availability === "0");
 
-watch(
-    isGEM,
-    (value) => {
-        if (value === true) {
-            form.non_gem_remark = "";
-            form.gem_non_availability = "";
-            form.gem_non_availability_remark = "";
-        }
+watch(isGEM, (value) => {
+    if (value === true) {
+        form.non_gem_remark = "";
+        form.gem_non_availability = "";
+        form.gem_non_availability_remark = "";
     }
-);
+});
 
-watch(
-    isNotAvailableInGEM,
-    (value) => {
-        value === true
-            ? (form.gem_non_availability_remark = "")
-            : (form.non_gem_remark = "");
-    }
-);
+watch(isNotAvailableInGEM, (value) => {
+    value === true
+        ? (form.gem_non_availability_remark = "")
+        : (form.non_gem_remark = "");
+});
 </script>
 
 <template>
     <JetFormSection @submitted="submit">
-        <template #title> Budget Utilization Entry </template>
+        <template #title> Budget Utilization Entry (FY: {{ $page.props.current_financial_year ? $page.props.current_financial_year.name : 'N/A' }}) </template>
 
         <template #description>
             Create a new transaction for recording a budget utilization.
@@ -80,7 +70,7 @@ watch(
             </h3>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="fund_id" value="Head Of Account" />
-                <Select v-model="form.fund_id" id="fund_id">
+                <Select v-model="form.fund_id" id="fund_id" required>
                     <option value="" disabled>Select</option>
                     <option
                         :value="fund.id"
@@ -97,7 +87,8 @@ watch(
                     id="file_number"
                     v-model="form.file_number"
                     type="text"
-                    class="block w-full mt-1" />
+                    class="block w-full mt-1"
+                    required />
                 <JetInputError
                     :message="form.errors.file_number"
                     class="mt-2" />
@@ -108,7 +99,8 @@ watch(
                     id="sanctioned_at"
                     v-model="form.sanctioned_at"
                     type="date"
-                    class="block w-full mt-1" />
+                    class="block w-full mt-1"
+                    required />
                 <JetInputError
                     :message="form.errors.sanctioned_at"
                     class="mt-2" />
@@ -120,12 +112,27 @@ watch(
                     v-model="form.amount"
                     type="number"
                     step="0.01"
-                    class="block w-full mt-1" />
+                    class="block w-full mt-1"
+                    required />
                 <JetInputError :message="form.errors.amount" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="status" value="Utilization Status" />
+                <Select
+                    v-model="form.status"
+                    id="status"
+                    required>
+                    <option value="incured">Incured</option>
+                    <option value="proposed">Proposed</option>
+                </Select>
+                <JetInputError :message="form.errors.status" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="sanctioner_id" value="Sanctioning Authority" />
-                <Select v-model="form.sanctioner_id" id="sanctioner_id">
+                <Select
+                    v-model="form.sanctioner_id"
+                    id="sanctioner_id"
+                    required>
                     <option value="" disabled>Select</option>
                     <option
                         :value="sanctioner.id"
@@ -144,7 +151,9 @@ watch(
                 Item & Vendor Details
             </h3>
             <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="item_with_description" value="Item With Description" />
+                <JetLabel
+                    for="item_with_description"
+                    value="Item With Description" />
                 <JetTextarea
                     id="item_with_description"
                     v-model="form.item"
@@ -160,7 +169,8 @@ watch(
                     id="vendor_name"
                     v-model="form.vendor_name"
                     type="text"
-                    class="block w-full mt-1" />
+                    class="block w-full mt-1"
+                    required />
                 <JetInputError
                     :message="form.errors.vendor_name"
                     class="mt-2" />
@@ -168,27 +178,31 @@ watch(
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="is_gem" value="Purchased From GEM ?" />
                 <Select v-model="form.is_gem" id="is_gem">
-                    <option value="yes" :selected="form.is_gem == 'yes'">
+                    <option value="1" :selected="form.is_gem == '1'">
                         Yes
                     </option>
-                    <option value="no" :selected="form.is_gem == 'no'">
+                    <option value="0" :selected="form.is_gem == '0'">
                         No
                     </option>
                 </Select>
                 <JetInputError :message="form.errors.is_gem" class="mt-2" />
             </div>
             <div v-if="!isGEM" class="col-span-6 sm:col-span-4">
-                <JetLabel for="gem_non_availability" value="Reason For Local Purchase" />
-                <Select v-model="form.gem_non_availability" id="gem_non_availability">
+                <JetLabel
+                    for="gem_non_availability"
+                    value="Reason For Local Purchase" />
+                <Select
+                    v-model="form.gem_non_availability"
+                    id="gem_non_availability">
                     <option value="" selected disabled>Select</option>
                     <option
-                        value="yes"
-                        :selected="form.gem_non_availability == 'yes'">
-                        Not Availability
+                        value="1"
+                        :selected="form.gem_non_availability == '1'">
+                        Non Availability
                     </option>
                     <option
-                        value="no"
-                        :selected="form.gem_non_availability == 'no'">
+                        value="0"
+                        :selected="form.gem_non_availability == '0'">
                         Other
                     </option>
                 </Select>
@@ -197,7 +211,9 @@ watch(
                     class="mt-2" />
             </div>
             <div v-if="isNotAvailableInGEM" class="col-span-6 sm:col-span-4">
-                <JetLabel for="gem_non_availability_remark" value="GEM Non Availability Report" />
+                <JetLabel
+                    for="gem_non_availability_remark"
+                    value="GEM Non Availability Report" />
                 <JetInput
                     id="gem_non_availability_remark"
                     v-model="form.gem_non_availability_remark"

@@ -48,4 +48,34 @@ class FinancialYear extends Model
     {
         $this->update(['is_active' => false]);
     }
+
+    /**
+     * Get the transactions for the financial year.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Check is there is an active financial year.
+     *
+     * @return Boolean
+     */
+    public static function hasActive()
+    {
+        return FinancialYear::where('is_active', true)->exists();
+    }
+
+    /**
+     * Get the current for the financial year.
+     *
+     * @return App\Models\FinancialYear
+     */
+    public static function current()
+    {
+        return FinancialYear::where('is_active', true)->first();
+    }
 }

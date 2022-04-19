@@ -2506,38 +2506,34 @@ __webpack_require__.r(__webpack_exports__);
     var props = __props;
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm)({
       fund_id: "",
-      // team_id : "",
-      // type : "",
-      status: "",
+      type: "utilization",
+      status: "incured",
       sanctioned_at: "",
       amount: "",
       item: "",
       vendor_name: "",
       file_number: "",
-      is_gem: "yes",
+      is_gem: "1",
       non_gem_remark: "",
       gem_non_availability: "",
       gem_non_availability_remark: "",
-      sanctioner_id: "" // user_id : "",
-      // financial_year_i_idd : "",
-
+      sanctioner_id: ""
     });
 
     var submit = function submit() {
-      form.post(route("admin.sanctioner.store"), {
-        errorBag: "createSanctioner",
-        preserveScroll: true
+      form.post(route("admin.transaction.store"), {
+        errorBag: "createUtilizationTransaction"
       });
     };
 
     var isGEM = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-      return form.is_gem === "yes";
+      return form.is_gem === "1";
     });
     var isNotAvailableInGEM = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-      return form.gem_non_availability === "yes";
+      return form.gem_non_availability === "1";
     });
     var isOtherReason = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-      return form.gem_non_availability === "no";
+      return form.gem_non_availability === "0";
     });
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(isGEM, function (value) {
       if (value === true) {
@@ -8701,28 +8697,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Budget Utilization Entry ");
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Create a new transaction for recording a budget utilization. ");
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Create a new transaction for recording a budget utilization. ");
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "col-span-6 sm:col-span-4 text-lg font-medium text-gray-900"
 }, " File Details ", -1
 /* HOISTED */
 );
 
-var _hoisted_4 = {
+var _hoisted_3 = {
   "class": "col-span-6 sm:col-span-4"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "",
   disabled: ""
 }, "Select", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = ["value"];
+var _hoisted_5 = ["value"];
+var _hoisted_6 = {
+  "class": "col-span-6 sm:col-span-4"
+};
 var _hoisted_7 = {
   "class": "col-span-6 sm:col-span-4"
 };
@@ -8732,42 +8729,55 @@ var _hoisted_8 = {
 var _hoisted_9 = {
   "class": "col-span-6 sm:col-span-4"
 };
-var _hoisted_10 = {
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "incured"
+}, "Incured", -1
+/* HOISTED */
+);
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "proposed"
+}, "Proposed", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
   "class": "col-span-6 sm:col-span-4"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "",
   disabled: ""
 }, "Select", -1
 /* HOISTED */
 );
 
-var _hoisted_12 = ["value"];
+var _hoisted_14 = ["value"];
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "mt-6 col-span-6 sm:col-span-4 text-lg font-medium text-gray-900"
 }, " Item & Vendor Details ", -1
 /* HOISTED */
 );
 
-var _hoisted_14 = {
-  "class": "col-span-6 sm:col-span-4"
-};
-var _hoisted_15 = {
-  "class": "col-span-6 sm:col-span-4"
-};
 var _hoisted_16 = {
   "class": "col-span-6 sm:col-span-4"
 };
-var _hoisted_17 = ["selected"];
-var _hoisted_18 = ["selected"];
-var _hoisted_19 = {
+var _hoisted_17 = {
+  "class": "col-span-6 sm:col-span-4"
+};
+var _hoisted_18 = {
+  "class": "col-span-6 sm:col-span-4"
+};
+var _hoisted_19 = ["selected"];
+var _hoisted_20 = ["selected"];
+var _hoisted_21 = {
   key: 0,
   "class": "col-span-6 sm:col-span-4"
 };
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "",
   selected: "",
   disabled: ""
@@ -8775,31 +8785,33 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_21 = ["selected"];
-var _hoisted_22 = ["selected"];
-var _hoisted_23 = {
+var _hoisted_23 = ["selected"];
+var _hoisted_24 = ["selected"];
+var _hoisted_25 = {
   key: 1,
   "class": "col-span-6 sm:col-span-4"
 };
-var _hoisted_24 = {
+var _hoisted_26 = {
   key: 2,
   "class": "col-span-6 sm:col-span-4"
 };
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Create ");
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Create ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["JetFormSection"], {
     onSubmitted: $setup.submit
   }, {
     title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_1];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Budget Utilization Entry (FY: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$page.props.current_financial_year ? _ctx.$page.props.current_financial_year.name : 'N/A') + ") ", 1
+      /* TEXT */
+      )];
     }),
     description: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_2];
+      return [_hoisted_1];
     }),
     form: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      return [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "fund_id",
         value: "Head Of Account"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Select"], {
@@ -8807,16 +8819,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $setup.form.fund_id = $event;
         }),
-        id: "fund_id"
+        id: "fund_id",
+        required: ""
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_5, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.funds, function (fund) {
+          return [_hoisted_4, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.funds, function (fund) {
             return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
               value: fund.id,
               key: fund.id
             }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fund.name), 9
             /* TEXT, PROPS */
-            , _hoisted_6);
+            , _hoisted_5);
           }), 128
           /* KEYED_FRAGMENT */
           ))];
@@ -8831,7 +8844,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "file_number",
         value: "File Number"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInput"], {
@@ -8841,7 +8854,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $setup.form.file_number = $event;
         }),
         type: "text",
-        "class": "block w-full mt-1"
+        "class": "block w-full mt-1",
+        required: ""
       }, null, 8
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -8849,7 +8863,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "sanctioned_at",
         value: "Sanctioned At"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInput"], {
@@ -8859,7 +8873,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $setup.form.sanctioned_at = $event;
         }),
         type: "date",
-        "class": "block w-full mt-1"
+        "class": "block w-full mt-1",
+        required: ""
       }, null, 8
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -8867,7 +8882,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "amount",
         value: "Sanctioned Amount"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInput"], {
@@ -8878,7 +8893,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         type: "number",
         step: "0.01",
-        "class": "block w-full mt-1"
+        "class": "block w-full mt-1",
+        required: ""
       }, null, 8
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -8886,24 +8902,49 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+        "for": "status",
+        value: "Utilization Status"
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Select"], {
+        modelValue: $setup.form.status,
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+          return $setup.form.status = $event;
+        }),
+        id: "status",
+        required: ""
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_10, _hoisted_11];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
+        message: $setup.form.errors.status,
+        "class": "mt-2"
+      }, null, 8
+      /* PROPS */
+      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "sanctioner_id",
         value: "Sanctioning Authority"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Select"], {
         modelValue: $setup.form.sanctioner_id,
-        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
           return $setup.form.sanctioner_id = $event;
         }),
-        id: "sanctioner_id"
+        id: "sanctioner_id",
+        required: ""
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_11, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.sanctioners, function (sanctioner) {
+          return [_hoisted_13, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.sanctioners, function (sanctioner) {
             return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
               value: sanctioner.id,
               key: sanctioner.id
             }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(sanctioner.name), 9
             /* TEXT, PROPS */
-            , _hoisted_12);
+            , _hoisted_14);
           }), 128
           /* KEYED_FRAGMENT */
           ))];
@@ -8918,13 +8959,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])]), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])]), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "item_with_description",
         value: "Item With Description"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetTextarea"], {
         id: "item_with_description",
         modelValue: $setup.form.item,
-        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
           return $setup.form.item = $event;
         }),
         "class": "block w-full mt-1",
@@ -8937,17 +8978,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "vendor_name",
         value: "Vendor Name"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInput"], {
         id: "vendor_name",
         modelValue: $setup.form.vendor_name,
-        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
           return $setup.form.vendor_name = $event;
         }),
         type: "text",
-        "class": "block w-full mt-1"
+        "class": "block w-full mt-1",
+        required: ""
       }, null, 8
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInputError"], {
@@ -8955,28 +8997,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "is_gem",
         value: "Purchased From GEM ?"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Select"], {
         modelValue: $setup.form.is_gem,
-        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
           return $setup.form.is_gem = $event;
         }),
         id: "is_gem"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-            value: "yes",
-            selected: $setup.form.is_gem == 'yes'
+            value: "1",
+            selected: $setup.form.is_gem == '1'
           }, " Yes ", 8
           /* PROPS */
-          , _hoisted_17), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-            value: "no",
-            selected: $setup.form.is_gem == 'no'
+          , _hoisted_19), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+            value: "0",
+            selected: $setup.form.is_gem == '0'
           }, " No ", 8
           /* PROPS */
-          , _hoisted_18)];
+          , _hoisted_20)];
         }),
         _: 1
         /* STABLE */
@@ -8988,28 +9030,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])]), !$setup.isGEM ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])]), !$setup.isGEM ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "gem_non_availability",
         value: "Reason For Local Purchase"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Select"], {
         modelValue: $setup.form.gem_non_availability,
-        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+        "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
           return $setup.form.gem_non_availability = $event;
         }),
         id: "gem_non_availability"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-            value: "yes",
-            selected: $setup.form.gem_non_availability == 'yes'
-          }, " Not Availability ", 8
+          return [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+            value: "1",
+            selected: $setup.form.gem_non_availability == '1'
+          }, " Non Availability ", 8
           /* PROPS */
-          , _hoisted_21), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-            value: "no",
-            selected: $setup.form.gem_non_availability == 'no'
+          , _hoisted_23), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+            value: "0",
+            selected: $setup.form.gem_non_availability == '0'
           }, " Other ", 8
           /* PROPS */
-          , _hoisted_22)];
+          , _hoisted_24)];
         }),
         _: 1
         /* STABLE */
@@ -9021,13 +9063,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.isNotAvailableInGEM ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.isNotAvailableInGEM ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "gem_non_availability_remark",
         value: "GEM Non Availability Report"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInput"], {
         id: "gem_non_availability_remark",
         modelValue: $setup.form.gem_non_availability_remark,
-        "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+        "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
           return $setup.form.gem_non_availability_remark = $event;
         }),
         type: "text",
@@ -9039,13 +9081,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
-      , ["message"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.isOtherReason ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
+      , ["message"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.isOtherReason ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetLabel"], {
         "for": "non_gem_remark",
         value: "Reason.."
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["JetInput"], {
         id: "non_gem_remark",
         modelValue: $setup.form.non_gem_remark,
-        "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+        "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
           return $setup.form.non_gem_remark = $event;
         }),
         type: "text",
@@ -9067,7 +9109,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         disabled: $setup.form.processing
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_25];
+          return [_hoisted_27];
         }),
         _: 1
         /* STABLE */

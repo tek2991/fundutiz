@@ -44,7 +44,7 @@ class FundController extends Controller
             'name' => 'required|string|max:255',
         ]));
 
-        return redirect()->route('admin.fund.index')->with('success', 'Fund created successfully.');
+        return redirect()->route('admin.fund.index')->banner("Fund created successfully");
     }
 
     /**
@@ -97,7 +97,7 @@ class FundController extends Controller
         }
         $fund->teams()->sync($teams);
 
-        return redirect()->route('admin.fund.index')->with('success', 'Fund updated successfully.');
+        return redirect()->route('admin.fund.index')->banner("Fund updated successfully");
     }
 
     /**
