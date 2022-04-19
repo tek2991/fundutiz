@@ -42,7 +42,7 @@ defineProps({
                         </li>
                     </ul>
                     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                        <CreateAllocationForm v-if="selectedTab == 'allocation'"></CreateAllocationForm>
+                        <CreateAllocationForm v-if="selectedTab == 'allocation'" :funds="funds" :sanctioners="sanctioners"></CreateAllocationForm>
                         <CreateUtilizationForm v-else :funds="funds" :sanctioners="sanctioners"></CreateUtilizationForm>
                     </div>
                 </div>
