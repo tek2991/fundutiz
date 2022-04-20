@@ -2723,26 +2723,24 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var props = __props;
-    var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm)({
-      fund_id: "",
-      type: "utilization",
-      status: "incured",
-      sanctioned_at: "",
-      amount: "",
-      item: "",
-      vendor_name: "",
-      file_number: "",
-      is_gem: "1",
-      non_gem_remark: "",
-      gem_non_availability: "",
-      gem_non_availability_remark: "",
-      sanctioner_id: ""
+    var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.ref)({
+      fund_id: props.transaction.fund.id,
+      type: props.transaction.type,
+      status: props.transaction.status,
+      sanctioned_at: props.transaction.sanctioned_at,
+      amount: props.transaction.amount,
+      item: props.transaction.item,
+      vendor_name: props.transaction.vendor_name,
+      file_number: props.transaction.file_number,
+      is_gem: props.transaction.is_gem,
+      non_gem_remark: props.transaction.non_gem_remark,
+      gem_non_availability: props.transaction.gem_non_availability,
+      gem_non_availability_remark: props.transaction.gem_non_availability_remark,
+      sanctioner_id: props.transaction.sanctioner.id
     });
 
     var submit = function submit() {
-      form.post(route("admin.transaction.store"), {
-        errorBag: "createUtilizationTransaction"
-      });
+      console.warn("Form submitted");
     };
 
     var isGEM = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
@@ -2754,16 +2752,6 @@ __webpack_require__.r(__webpack_exports__);
     var isOtherReason = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
       return form.gem_non_availability === "0";
     });
-    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(isGEM, function (value) {
-      if (value === true) {
-        form.non_gem_remark = "";
-        form.gem_non_availability = "";
-        form.gem_non_availability_remark = "";
-      }
-    });
-    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(isNotAvailableInGEM, function (value) {
-      value === true ? form.gem_non_availability_remark = "" : form.non_gem_remark = "";
-    });
     var __returned__ = {
       props: props,
       form: form,
@@ -2771,7 +2759,7 @@ __webpack_require__.r(__webpack_exports__);
       isGEM: isGEM,
       isNotAvailableInGEM: isNotAvailableInGEM,
       isOtherReason: isOtherReason,
-      useForm: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm,
+      ref: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.ref,
       watch: vue__WEBPACK_IMPORTED_MODULE_1__.watch,
       computed: vue__WEBPACK_IMPORTED_MODULE_1__.computed,
       JetButton: _Jetstream_Button_vue__WEBPACK_IMPORTED_MODULE_2__["default"],

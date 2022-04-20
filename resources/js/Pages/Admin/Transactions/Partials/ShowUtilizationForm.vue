@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from "@inertiajs/inertia-vue3";
+import { ref } from "@inertiajs/inertia-vue3";
 import { watch, computed } from "vue";
 import JetButton from "@/Jetstream/Button.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
@@ -15,45 +15,30 @@ const props = defineProps({
     sanctioners: Object,
 });
 
-const form = useForm({
-    fund_id: "",
-    type: "utilization",
-    status: "incured",
-    sanctioned_at: "",
-    amount: "",
-    item: "",
-    vendor_name: "",
-    file_number: "",
-    is_gem: "1",
-    non_gem_remark: "",
-    gem_non_availability: "",
-    gem_non_availability_remark: "",
-    sanctioner_id: "",
+const form = ref({
+    fund_id: props.transaction.fund.id,
+    type: props.transaction.type,
+    status: props.transaction.status,
+    sanctioned_at: props.transaction.sanctioned_at,
+    amount: props.transaction.amount,
+    item: props.transaction.item,
+    vendor_name: props.transaction.vendor_name,
+    file_number: props.transaction.file_number,
+    is_gem: props.transaction.is_gem,
+    non_gem_remark: props.transaction.non_gem_remark,
+    gem_non_availability: props.transaction.gem_non_availability,
+    gem_non_availability_remark: props.transaction.gem_non_availability_remark,
+    sanctioner_id: props.transaction.sanctioner.id,
 });
 
 const submit = () => {
-    form.post(route("admin.transaction.store"), {
-        errorBag: "createUtilizationTransaction",
-    });
+    console.warn("Form submitted");
 };
 
 const isGEM = computed(() => form.is_gem === "1");
 const isNotAvailableInGEM = computed(() => form.gem_non_availability === "1");
 const isOtherReason = computed(() => form.gem_non_availability === "0");
 
-watch(isGEM, (value) => {
-    if (value === true) {
-        form.non_gem_remark = "";
-        form.gem_non_availability = "";
-        form.gem_non_availability_remark = "";
-    }
-});
-
-watch(isNotAvailableInGEM, (value) => {
-    value === true
-        ? (form.gem_non_availability_remark = "")
-        : (form.non_gem_remark = "");
-});
 </script>
 
 <template>
