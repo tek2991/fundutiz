@@ -86,7 +86,11 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
+        $transaction = new TransactionResource($transaction);
+        $current_team = auth()->user()->currentTeam;
+        $funds = FundResource::collection($current_team->funds);
+        $sanctioners = SanctionerResource::collection(Sanctioner::all());
+        return Inertia::render('Admin/Transactions/Show', compact('funds', 'sanctioners', 'transaction'));
     }
 
     /**

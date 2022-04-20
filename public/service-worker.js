@@ -94,7 +94,7 @@ define(['./workbox-b7445681'], (function (workbox) { 'use strict';
 
   workbox.precacheAndRoute([{
     "url": "/js/app.js",
-    "revision": "a520be1ba33f3c534931296e1569c371"
+    "revision": "f81c504370af8b5382f3ed57be2629ab"
   }, {
     "url": "/js/manifest.js",
     "revision": "8ecf38eae1ba6714c14eb91b576e55f9"

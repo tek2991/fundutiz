@@ -87,7 +87,7 @@ defineProps({
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {{ item.fund.name }}
                                                         
-                                                        <Cart v-if="item.type == 'allocation'" class="ml-2" />
+                                                        <Cart v-if="item.type == 'utilization'" class="ml-2" />
                                                         <UpTrend v-else class="ml-2" />
 
                                                     </td>
@@ -108,7 +108,7 @@ defineProps({
                                                         <SimpleLink :href="route('admin.transaction.edit', item.id)">
                                                             Edit
                                                         </SimpleLink>/
-                                                        <SimpleLink :href="route('admin.transaction.edit', item.id)">
+                                                        <SimpleLink :href="route('admin.transaction.show', item.id)">
                                                             View
                                                         </SimpleLink>
                                                     </td>

@@ -37,6 +37,6 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
         Route::resource('financial_year', FinancialYearController::class)->only('index', 'create', 'store', 'edit', 'update');
         Route::resource('fund', FundController::class)->only('index', 'create', 'store', 'edit', 'update', 'destroy');
         Route::resource('sanctioner', SanctionerController::class)->only('index', 'create', 'store', 'edit', 'update');
-        Route::resource('transaction', TransactionController::class)->only('index', 'create', 'store', 'edit', 'update');
+        Route::resource('transaction', TransactionController::class)->only('index', 'create', 'store', 'show', 'edit', 'update');
     });
 });
