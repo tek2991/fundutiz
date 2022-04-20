@@ -32,7 +32,7 @@ const form = useForm({
 
 const submit = () => {
     form.post(route("admin.transaction.store"), {
-        errorBag: "createUtilizationTransaction",
+        errorBag: "createAllocationTransaction",
     });
 };
 
@@ -77,7 +77,7 @@ const submit = () => {
                     class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="sanctioned_at" value="Sanctioned At" />
+                <JetLabel for="sanctioned_at" value="Dated" />
                 <JetInput
                     id="sanctioned_at"
                     v-model="form.sanctioned_at"
@@ -89,7 +89,7 @@ const submit = () => {
                     class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="amount" value="Sanctioned Amount" />
+                <JetLabel for="amount" value="Amount" />
                 <JetInput
                     id="amount"
                     v-model="form.amount"

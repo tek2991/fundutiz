@@ -61,7 +61,7 @@ class TransactionController extends Controller
             'gem_non_availability' => ['nullable', 'boolean'],
             'gem_non_availability_remark' => ['nullable', 'string', 'max:255'],
             'non_gem_remark' => ['nullable', 'string', 'max:255'],
-            'sanctioner_id' => ['required', 'exists:sanctioners,id'],
+            'sanctioner_id' => ['nullable', 'exists:sanctioners,id'],
         ]);
 
         $additional_fields = [

@@ -16,8 +16,8 @@ class TransactionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            // 'fund_id' => $this->fund_id,
-            // 'team_id' => $this->team_id,
+            'fund' => new FundResource($this->fund),
+            'team' => new TeamResource($this->team),
             'type' => $this->type,
             'status' => $this->status,
             'sanctioned_at' => $this->sanctioned_at->toDateString(),
@@ -29,9 +29,9 @@ class TransactionResource extends JsonResource
             'non_gem_remark' => $this->non_gem_remark,
             'gem_non_availability' => $this->gem_non_availability,
             'gem_non_availability_remark' => $this->gem_non_availability_remark,
-            // 'sanctioner_id' => $this->sanctioner_id,
-            // 'user_id' => $this->user_id,
-            // 'financial_year_id' => $this->financial_year_id,
+            'sanctioner' => new SanctionerResource($this->sanctioner),
+            'user' => new UserResource($this->lastUser),
+            'financialYear' => new FinancialYearResource($this->financialYear),
         ];
     }
 }

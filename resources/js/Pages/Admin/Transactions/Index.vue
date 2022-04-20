@@ -4,6 +4,8 @@ import ButtonLink from "@/Jetstream/ButtonLink.vue";
 import SimpleLink from "@/Jetstream/SimpleLink.vue";
 import Pagination from "@/Jetstream/Pagination.vue";
 import SuccessBadge from "@/Icons/SuccessBadge.vue";
+import Cart from "@/Icons/Cart.vue";
+import UpTrend from "@/Icons/UpTrend.vue";
 
 defineProps({
     transactions: Object,
@@ -39,12 +41,27 @@ defineProps({
                                                     <th
                                                         scope="col"
                                                         class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                                        Type
+                                                        Team/Office
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         class="truncate px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                                        Created at
+                                                        H.O.A
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="truncate px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">
+                                                        Amount
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="truncate px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">
+                                                        Dated
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="truncate px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                                        User
                                                     </th>
                                                     <th
                                                         scope="col"
@@ -64,16 +81,35 @@ defineProps({
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         <SuccessBadge v-if="item.is_active == true" />
-                                                        {{ item.type }}
+                                                        {{ item.team.name }}
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {{ item.created_at }}
+                                                        {{ item.fund.name }}
+                                                        
+                                                        <Cart v-if="item.type == 'allocation'" class="ml-2" />
+                                                        <UpTrend v-else class="ml-2" />
+
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
+                                                        ₹ {{ item.amount }}
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                                        {{ item.sanctioned_at }}
+                                                    </td>
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                          {{ item.user.name }}
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                         <SimpleLink :href="route('admin.transaction.edit', item.id)">
                                                             Edit
+                                                        </SimpleLink>/
+                                                        <SimpleLink :href="route('admin.transaction.edit', item.id)">
+                                                            View
                                                         </SimpleLink>
                                                     </td>
                                                 </tr>

@@ -97,7 +97,7 @@ class Transaction extends Model
      */
     public function lastUser()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**
