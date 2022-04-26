@@ -26,5 +26,9 @@
         "vue": "^3.2.31",
         "vue-loader": "^17.0.0",
         "workbox-webpack-plugin": "^6.5.3"
+    },
+    "dependencies": {
+        "chart.js": "^3.7.1",
+        "vue-chartjs": "^4.0.7"
     }
 }
