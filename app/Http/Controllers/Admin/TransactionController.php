@@ -101,7 +101,11 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        //
+        $transaction = new TransactionResource($transaction);
+        $current_team = auth()->user()->currentTeam;
+        $funds = FundResource::collection($current_team->funds);
+        $sanctioners = SanctionerResource::collection(Sanctioner::all());
+        return Inertia::render('Admin/Transactions/Edit', compact('funds', 'sanctioners', 'transaction'));
     }
 
     /**
@@ -113,7 +117,32 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-        //
+        $validated_data = $request->validate([
+            'fund_id' => ['required', 'integer'],
+            'type' => ['nullable', 'in:allocation,utilization'],
+            'status' => ['nullable', 'in:incured,proposed'],
+            'sanctioned_at' => ['required', 'date'],
+            'amount' => ['required', 'numeric'],
+            'item' => ['nullable', 'string', 'max:2550'],
+            'vendor_name' => ['nullable', 'string', 'max:255'],
+            'file_number' => ['required', 'string', 'max:255'],
+            'is_gem' => ['nullable', 'boolean'],
+            'gem_non_availability' => ['nullable', 'boolean'],
+            'gem_non_availability_remark' => ['nullable', 'string', 'max:255'],
+            'non_gem_remark' => ['nullable', 'string', 'max:255'],
+            'sanctioner_id' => ['nullable', 'exists:sanctioners,id'],
+        ]);
+
+        $additional_fields = [
+            'user_id' => auth()->user()->id,
+        ];
+
+        try {
+            $transaction->update(array_merge($validated_data, $additional_fields));
+            return redirect()->route('admin.transaction.index')->banner("Transaction updated successfully.");
+        } catch (Exception $e) {
+            return redirect()->back()->dangerBanner("Something went wrong: " . $e->getMessage());
+        }
     }
 
     /**

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 defineProps({
-    modelValue: String,
+    modelValue: String | Number,
 });
 
 defineEmits(['update:modelValue']);
