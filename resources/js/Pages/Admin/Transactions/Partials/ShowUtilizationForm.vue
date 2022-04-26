@@ -1,11 +1,9 @@
 <script setup>
-import { ref } from "@inertiajs/inertia-vue3";
-import { watch, computed } from "vue";
-import JetButton from "@/Jetstream/Button.vue";
+import { watch, computed, ref } from "vue";
+import ButtonLink from "@/Jetstream/ButtonLink.vue";
 import JetFormSection from "@/Jetstream/FormSection.vue";
 import JetInput from "@/Jetstream/Input.vue";
 import JetTextarea from "@/Jetstream/Textarea.vue";
-import JetInputError from "@/Jetstream/InputError.vue";
 import JetLabel from "@/Jetstream/Label.vue";
 import Select from "@/Jetstream/Select.vue";
 
@@ -35,9 +33,9 @@ const submit = () => {
     console.warn("Form submitted");
 };
 
-const isGEM = computed(() => form.is_gem === "1");
-const isNotAvailableInGEM = computed(() => form.gem_non_availability === "1");
-const isOtherReason = computed(() => form.gem_non_availability === "0");
+const isGEM = computed(() => form.value.is_gem === "1");
+const isNotAvailableInGEM = computed(() => form.value.gem_non_availability === "1");
+const isOtherReason = computed(() => form.value.gem_non_availability === "0");
 
 </script>
 
@@ -56,7 +54,7 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
             </h3>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="fund_id" value="Head Of Account" />
-                <Select v-model="form.fund_id" id="fund_id" required>
+                <Select v-model="form.fund_id" id="fund_id" disabled>
                     <option value="" disabled>Select</option>
                     <option
                         :value="fund.id"
@@ -65,7 +63,6 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                         {{ fund.name }}
                     </option>
                 </Select>
-                <JetInputError :message="form.errors.fund_id" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="file_number" value="File Number" />
@@ -74,10 +71,7 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                     v-model="form.file_number"
                     type="text"
                     class="block w-full mt-1"
-                    required />
-                <JetInputError
-                    :message="form.errors.file_number"
-                    class="mt-2" />
+                    disabled />
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="sanctioned_at" value="Sanctioned At" />
@@ -86,10 +80,7 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                     v-model="form.sanctioned_at"
                     type="date"
                     class="block w-full mt-1"
-                    required />
-                <JetInputError
-                    :message="form.errors.sanctioned_at"
-                    class="mt-2" />
+                    disabled />
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="amount" value="Sanctioned Amount" />
@@ -99,26 +90,24 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                     type="number"
                     step="0.01"
                     class="block w-full mt-1"
-                    required />
-                <JetInputError :message="form.errors.amount" class="mt-2" />
+                    disabled />
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="status" value="Utilization Status" />
                 <Select
                     v-model="form.status"
                     id="status"
-                    required>
+                    disabled>
                     <option value="incured">Incured</option>
                     <option value="proposed">Proposed</option>
                 </Select>
-                <JetInputError :message="form.errors.status" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="sanctioner_id" value="Sanctioning Authority" />
                 <Select
                     v-model="form.sanctioner_id"
                     id="sanctioner_id"
-                    required>
+                    disabled>
                     <option value="" disabled>Select</option>
                     <option
                         :value="sanctioner.id"
@@ -127,9 +116,6 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                         {{ sanctioner.name }}
                     </option>
                 </Select>
-                <JetInputError
-                    :message="form.errors.sanctioner_id"
-                    class="mt-2" />
             </div>
 
             <h3
@@ -145,9 +131,8 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                     v-model="form.item"
                     class="block w-full mt-1"
                     rows="4"
-                    required>
+                    disabled>
                 </JetTextarea>
-                <JetInputError :message="form.errors.item" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="vendor_name" value="Vendor Name" />
@@ -156,14 +141,11 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                     v-model="form.vendor_name"
                     type="text"
                     class="block w-full mt-1"
-                    required />
-                <JetInputError
-                    :message="form.errors.vendor_name"
-                    class="mt-2" />
+                    disabled />
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="is_gem" value="Purchased From GEM ?" />
-                <Select v-model="form.is_gem" id="is_gem">
+                <Select v-model="form.is_gem" id="is_gem" disabled >
                     <option value="1" :selected="form.is_gem == '1'">
                         Yes
                     </option>
@@ -171,7 +153,6 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                         No
                     </option>
                 </Select>
-                <JetInputError :message="form.errors.is_gem" class="mt-2" />
             </div>
             <div v-if="!isGEM" class="col-span-6 sm:col-span-4">
                 <JetLabel
@@ -179,7 +160,7 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                     value="Reason For Local Purchase" />
                 <Select
                     v-model="form.gem_non_availability"
-                    id="gem_non_availability">
+                    id="gem_non_availability" disabled >
                     <option value="" selected disabled>Select</option>
                     <option
                         value="1"
@@ -192,9 +173,6 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                         Other
                     </option>
                 </Select>
-                <JetInputError
-                    :message="form.errors.gem_non_availability"
-                    class="mt-2" />
             </div>
             <div v-if="isNotAvailableInGEM" class="col-span-6 sm:col-span-4">
                 <JetLabel
@@ -204,10 +182,7 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                     id="gem_non_availability_remark"
                     v-model="form.gem_non_availability_remark"
                     type="text"
-                    class="block w-full mt-1" />
-                <JetInputError
-                    :message="form.errors.gem_non_availability_remark"
-                    class="mt-2" />
+                    class="block w-full mt-1" disabled />
             </div>
             <div v-if="isOtherReason" class="col-span-6 sm:col-span-4">
                 <JetLabel for="non_gem_remark" value="Reason.." />
@@ -215,19 +190,13 @@ const isOtherReason = computed(() => form.gem_non_availability === "0");
                     id="non_gem_remark"
                     v-model="form.non_gem_remark"
                     type="text"
-                    class="block w-full mt-1" />
-                <JetInputError
-                    :message="form.errors.non_gem_remark"
-                    class="mt-2" />
+                    class="block w-full mt-1" 
+                    disabled />
             </div>
         </template>
 
         <template #actions>
-            <JetButton
-                :class="{ 'opacity-25': form.processing }"
-                :disabled="form.processing">
-                Create
-            </JetButton>
+            <ButtonLink :href="route('admin.transaction.edit', transaction.id)"> Edit </ButtonLink>
         </template>
     </JetFormSection>
 </template>

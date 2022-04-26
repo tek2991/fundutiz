@@ -41,8 +41,6 @@ class Transaction extends Model
      */
     protected $casts = [
         'sanctioned_at' => 'date',
-        'is_gem' => 'boolean',
-        'gem_non_availability' => 'boolean',
         'amount' => 'integer',
     ];
 
