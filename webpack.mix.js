@@ -23,7 +23,9 @@ mix.js("resources/js/app.js", "public/js")
     })
     .extract()
     .version()
-    .generateSW();
+    .generateSW({
+        maximumFileSizeToCacheInBytes: 5000000,
+    });
 
 if (mix.inProduction()) {
     mix.version();
