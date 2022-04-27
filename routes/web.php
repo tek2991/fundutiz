@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\FundController;
 use App\Http\Controllers\Admin\SanctionerController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\FinancialYearController;
+use App\Http\Controllers\DashBoardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified',]], function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashBoardController::class, 'index'])->name('dashboard');
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['is_admin']], function () {
         Route::resource('financial_year', FinancialYearController::class)->only('index', 'create', 'store', 'edit', 'update');

@@ -24,7 +24,7 @@ import {
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
-defineProps({
+const props = defineProps({
     chartId: {
         type: String,
         default: "pie-chart",
@@ -49,14 +49,40 @@ defineProps({
         type: Array,
         default: () => [],
     },
+    labels: {
+        type: Array,
+        default: () => ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    },
+    backgroundColors: {
+        type: Array,
+        default: () => [
+            "rgba(255, 99, 132)",
+            "rgba(54, 162, 235)",
+            "rgba(255, 206, 86)",
+            "rgba(75, 192, 192)",
+            "rgba(153, 102, 255)",
+            "rgba(255, 159, 64)",
+        ],
+    },
+    data: {
+        type: Array,
+        default: () => [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+        ],
+    },
 });
 
 const chartData = {
-    labels: ["VueJs", "EmberJs", "ReactJs", "AngularJs"],
+    labels: props.labels,
     datasets: [
         {
-            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
-            data: [40, 20, 80, 10],
+            backgroundColor: props.backgroundColors,
+            data: props.data,
         },
     ],
 };

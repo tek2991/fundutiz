@@ -58,4 +58,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Check is user is admin
+     *
+     * @var bool
+     */
+    public function is_admin(){
+        return $this->email === config('constants.admin_email');
+    }
 }
