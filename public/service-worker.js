@@ -103,7 +103,7 @@ define(['./workbox-b7445681'], (function (workbox) { 'use strict';
     "revision": "02e7885f873645c5ced305c977bf7b78"
   }, {
     "url": "css/app.css",
-    "revision": "f08377b29c46716f73edcf8f79308d8c"
+    "revision": "41915b2730957cc69ebea9ca43a8011c"
   }], {});
 
 }));

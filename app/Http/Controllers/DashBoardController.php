@@ -43,9 +43,9 @@ class DashBoardController extends Controller
 
         return (object)[
             'labels' => [
-                'Utilization Incured',
-                'Utilization Proposed',
-                'Fund Balance',
+                'Incured',
+                'Proposed',
+                'Balance',
             ],
             'backgroundColors' => [
                 'coral',
@@ -64,5 +64,9 @@ class DashBoardController extends Controller
                 'fund_balance' => $fund_balance,
             ] 
         ];
+    }
+
+    public function getUserWiseFundData(Fund $fund, Team $team, FinancialYear $financialYear){
+        
     }
 }
