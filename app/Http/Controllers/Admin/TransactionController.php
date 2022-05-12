@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
+use App\Models\Fund;
 use Inertia\Inertia;
 use App\Models\Sanctioner;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\FinancialYear;
 use App\Http\Controllers\Controller;
+use App\Actions\Fundutiz\FundBalance;
 use App\Http\Resources\v1\FundResource;
 use App\Http\Resources\v1\SanctionerResource;
 use App\Http\Resources\v1\TransactionResource;
-use Exception;
 
 class TransactionController extends Controller
 {
@@ -53,7 +55,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
+        $validated = $request->validate([
             'fund_id' => ['required', 'integer'],
             'type' => ['nullable', 'in:allocation,utilization'],
             'status' => ['nullable', 'in:incured,proposed'],
@@ -69,14 +71,25 @@ class TransactionController extends Controller
             'sanctioner_id' => ['nullable', 'exists:sanctioners,id'],
         ]);
 
+        $fund = Fund::findOrFail($request->fund_id);
+        $current_team = auth()->user()->currentTeam;
+        $financialYear = FinancialYear::current();
+        $current_balance = FundBalance::current($fund, $current_team, $financialYear);
+
+        if ($request->type == 'utilization') {
+            if ($current_balance - $request->amount < 0) {
+                return redirect()->back()->dangerBanner('Utilization amount cannot be greater than fund balance!');
+            }
+        }
+
         $additional_fields = [
-            'team_id' => auth()->user()->currentTeam->id,
+            'team_id' => $current_team->id,
             'user_id' => auth()->user()->id,
-            'financial_year_id' => FinancialYear::current()->id,
+            'financial_year_id' => $financialYear->id,
         ];
 
         try {
-            Transaction::create(array_merge($request->all(), $additional_fields));
+            Transaction::create(array_merge($validated, $additional_fields));
             return redirect()->route('admin.transaction.index')->banner("Transaction created successfully.");
         } catch (Exception $e) {
             return redirect()->back()->dangerBanner("Something went wrong: " . $e->getMessage());
@@ -137,6 +150,17 @@ class TransactionController extends Controller
             'non_gem_remark' => ['nullable', 'string', 'max:255'],
             'sanctioner_id' => ['nullable', 'exists:sanctioners,id'],
         ]);
+
+        $fund = Fund::findOrFail($request->fund_id);
+        $current_team = auth()->user()->currentTeam;
+        $financialYear = FinancialYear::current();
+        $current_balance = FundBalance::current($fund, $current_team, $financialYear);
+
+        if ($request->type == 'utilization') {
+            if ($current_balance - $request->amount < 0) {
+                return redirect()->back()->dangerBanner('Utilization amount cannot be greater than fund balance!');
+            }
+        }
 
         $additional_fields = [
             'user_id' => auth()->user()->id,
