@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FinancialYear;
 use App\Models\Fund;
 use App\Models\Team;
+use App\Models\User;
+use Inertia\Inertia;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Models\FinancialYear;
+use Illuminate\Support\Facades\DB;
 
 class DashBoardController extends Controller
 {
@@ -27,7 +29,10 @@ class DashBoardController extends Controller
             $pieChartData->{$fund->name} = $data;
         }
 
-        return Inertia::render('Dashboard', compact('pieChartData'));
+        $barChartData = $this->getUserWiseData($team, $financialYear);
+
+
+        return Inertia::render('Dashboard', compact('pieChartData', 'barChartData'));
     }
 
 
@@ -62,11 +67,32 @@ class DashBoardController extends Controller
                 'total_utilization_incured' => $total_utilization_incured,
                 'total_utilization_proposed' => $total_utilization_proposed,
                 'fund_balance' => $fund_balance,
-            ] 
+            ]
         ];
     }
 
-    public function getUserWiseFundData(Fund $fund, Team $team, FinancialYear $financialYear){
-        
+    public function getUserWiseData(Team $team, FinancialYear $financialYear)
+    {
+        $users_in_team = $team->allUsers();
+        $labels = [];
+        $data = [];
+        $backgroundColors = [];
+        foreach ($users_in_team as $user) {
+            $labels[] = $user->name;
+            $backgroundColors[] = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+            $data[] = $this->getUserData($user, $team, $financialYear);
+        }
+
+        return (object)[
+            'labels' => $labels,
+            'backgroundColors' => $backgroundColors,
+            'data' => $data,
+            'team' => $team,
+        ];
+    }
+
+    public function getUserData(User $user, Team $team, FinancialYear $financialYear)
+    {
+        return Transaction::where('user_id', $user->id)->where('team_id', $team->id)->where('financial_year_id', $financialYear->id)->where('type', 'utilization')->sum('amount_in_cents') / 100;
     }
 }
