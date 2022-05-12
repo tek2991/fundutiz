@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\v1;
 
+use App\Actions\Fundutiz\FundBalance;
+use App\Models\FinancialYear;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FundResource extends JsonResource
@@ -18,6 +20,7 @@ class FundResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'created_at' => $this->created_at->toDateString(),
+            'current_balance' => FundBalance::current($this, auth()->user()->currentTeam, FinancialYear::current()),
         ];
     }
 }
