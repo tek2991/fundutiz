@@ -10,6 +10,12 @@ use Inertia\Inertia;
 
 class FinancialYearController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(FinancialYear::class);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

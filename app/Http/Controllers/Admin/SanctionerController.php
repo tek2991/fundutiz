@@ -10,6 +10,10 @@ use App\Http\Resources\v1\SanctionerResource;
 
 class SanctionerController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Sanctioner::class);
+    }
     /**
      * Display a listing of the resource.
      *

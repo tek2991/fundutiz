@@ -15,6 +15,10 @@ use Exception;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Transaction::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +26,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = TransactionResource::collection(Transaction::orderBy('updated_at', 'desc')->paginate());
+        $current_team_id = auth()->user()->currentTeam->id;
+        $transactions = TransactionResource::collection(Transaction::where('team_id', $current_team_id)->orderBy('updated_at', 'desc')->paginate());
         return Inertia::render('Admin/Transactions/Index', compact('transactions'));
     }
 

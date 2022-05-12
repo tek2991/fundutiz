@@ -11,6 +11,11 @@ use App\Rules\TeamObjectRule;
 
 class FundController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Fund::class);
+    }
     /**
      * Display a listing of the resource.
      *
