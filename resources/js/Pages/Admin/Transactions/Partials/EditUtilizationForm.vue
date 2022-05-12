@@ -31,6 +31,10 @@ const form = useForm({
     sanctioner_id: props.transaction.sanctioner.id,
 });
 
+const selectedFund = computed(() => {
+    return form.fund_id ? props.funds.find((fund) => fund.id == form.fund_id) : null;
+});
+
 const submit = () => {
     form.put(route("admin.transaction.update", props.transaction.id), {
         errorBag: "updateUtilizationTransaction",
@@ -58,10 +62,24 @@ watch(isNotAvailableInGEM, (value) => {
 
 <template>
     <JetFormSection @submitted="submit">
-        <template #title> Budget Utilization Entry (FY: {{ $page.props.current_financial_year ? $page.props.current_financial_year.name : 'N/A' }}) </template>
+        <template #title>
+            Budget Utilization Entry (FY:
+            {{
+                $page.props.current_financial_year
+                    ? $page.props.current_financial_year.name
+                    : "N/A"
+            }})
+        </template>
 
         <template #description>
             Create a new transaction for recording a budget utilization.
+            <span v-if="selectedFund">
+                <h3 class="text-lg font-semibold py-3">
+                    Current Balance ({{ selectedFund.name }}): ₹{{
+                        selectedFund ? selectedFund.current_balance : "N/A"
+                    }}
+                </h3>
+            </span>
         </template>
 
         <template #form>
@@ -119,10 +137,7 @@ watch(isNotAvailableInGEM, (value) => {
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="status" value="Utilization Status" />
-                <Select
-                    v-model="form.status"
-                    id="status"
-                    required>
+                <Select v-model="form.status" id="status" required>
                     <option value="incured">Incured</option>
                     <option value="proposed">Proposed</option>
                 </Select>
@@ -182,9 +197,7 @@ watch(isNotAvailableInGEM, (value) => {
                     <option value="1" :selected="form.is_gem == '1'">
                         Yes
                     </option>
-                    <option value="0" :selected="form.is_gem == '0'">
-                        No
-                    </option>
+                    <option value="0" :selected="form.is_gem == '0'">No</option>
                 </Select>
                 <JetInputError :message="form.errors.is_gem" class="mt-2" />
             </div>

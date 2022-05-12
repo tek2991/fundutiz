@@ -30,6 +30,10 @@ const form = useForm({
     sanctioner_id: "",
 });
 
+const selectedFund = computed(() => {
+    return form.fund_id ? props.funds.find((fund) => fund.id == form.fund_id) : null;
+});
+
 const submit = () => {
     form.post(route("admin.transaction.store"), {
         errorBag: "createUtilizationTransaction",
@@ -60,7 +64,12 @@ watch(isNotAvailableInGEM, (value) => {
         <template #title> Budget Utilization Entry (FY: {{ $page.props.current_financial_year ? $page.props.current_financial_year.name : 'N/A' }}) </template>
 
         <template #description>
-            Create a new transaction for recording a budget utilization.
+            Create a new transaction for recording a budget utilization. <br>
+            <span v-if="selectedFund">
+                <h3 class="text-lg font-semibold py-3">
+                    Current Balance ({{ selectedFund.name }}): ₹{{ selectedFund ? selectedFund.current_balance : 'N/A' }}
+                </h3>
+            </span>
         </template>
 
         <template #form>
