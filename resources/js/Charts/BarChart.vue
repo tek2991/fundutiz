@@ -32,7 +32,7 @@ ChartJS.register(
     LinearScale
 );
 
-defineProps({
+const props = defineProps({
     chartId: {
         type: String,
         default: "bar-chart",
@@ -61,11 +61,42 @@ defineProps({
         type: Object,
         default: () => {},
     },
+    labels: {
+        type: Array,
+        default: () => ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    },
+    backgroundColors: {
+        type: Array,
+        default: () => [
+            "rgba(255, 99, 132)",
+            "rgba(54, 162, 235)",
+            "rgba(255, 206, 86)",
+            "rgba(75, 192, 192)",
+            "rgba(153, 102, 255)",
+            "rgba(255, 159, 64)",
+        ],
+    },
+    data: {
+        type: Array,
+        default: () => [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+        ],
+    },
 });
 
 const chartData = {
-    labels: ["January", "February", "March"],
-    datasets: [{ data: [40, 20, 12] }],
+    labels: props.labels,
+    datasets: [
+        {
+            backgroundColor: props.backgroundColors,
+            data: props.data,
+        },
+    ],
 };
 const chartOptions = {
     responsive: true,

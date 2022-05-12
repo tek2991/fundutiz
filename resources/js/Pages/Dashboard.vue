@@ -1,9 +1,11 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import PieChart from "@/Charts/PieChart.vue";
+import BarChart from "@/Charts/BarChart.vue";
 
 const props = defineProps({
     pieChartData: Array,
+    barChartData: Array,
 });
 </script>
 
@@ -90,8 +92,22 @@ const props = defineProps({
                                 </li>
                             </ul>
                         </div>
-                    <!-- Bar Chart -->
-
+                        <!-- Bar Chart -->
+                    </div>
+                    <div
+                        class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 text-center">
+                        <div
+                            class="block p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                            <h3
+                                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                User wise Utilization
+                            </h3>
+                            <BarChart
+                                :height="200"
+                                :labels="barChartData.labels"
+                                :backgroundColors="barChartData.backgroundColors"
+                                :data="barChartData.data" />
+                        </div>
                     </div>
                 </div>
             </div>
