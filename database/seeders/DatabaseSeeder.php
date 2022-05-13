@@ -15,5 +15,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        \App\Models\FinancialYear::factory(1)->create([
+            'name' => '2021-2022',
+            'is_active' => true,
+        ]);
     }
 }

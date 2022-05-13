@@ -34,7 +34,7 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified',]], function () {
     Route::get('/dashboard', [DashBoardController::class, 'index'])->name('dashboard');
 
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['is_admin']], function () {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('financial_year', FinancialYearController::class)->only('index', 'create', 'store', 'edit', 'update');
         Route::resource('fund', FundController::class)->only('index', 'create', 'store', 'edit', 'update', 'destroy');
         Route::resource('sanctioner', SanctionerController::class)->only('index', 'create', 'store', 'edit', 'update');
