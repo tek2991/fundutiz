@@ -19,11 +19,19 @@ defineProps({
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Transactions
                 </h2>
-                <ButtonLink :href="route('admin.transaction.create')">Create</ButtonLink>
+                <ButtonLink :href="route('admin.transaction.create')"
+                    >Create</ButtonLink
+                >
             </span>
         </template>
 
-        <div class="pt-12 sm:py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex p-4">
+            <ButtonLink :href="route('admin.transaction.download-report')"
+                >Download</ButtonLink
+            >
+        </div>
+
+        <div class="">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="">
@@ -80,16 +88,26 @@ defineProps({
                                                     class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <SuccessBadge v-if="item.is_active == true" />
+                                                        <SuccessBadge
+                                                            v-if="
+                                                                item.is_active ==
+                                                                true
+                                                            " />
                                                         {{ item.team.name }}
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {{ item.fund.name }}
-                                                        
-                                                        <Cart v-if="item.type == 'utilization'" class="ml-2" />
-                                                        <UpTrend v-else class="ml-2" />
 
+                                                        <Cart
+                                                            v-if="
+                                                                item.type ==
+                                                                'utilization'
+                                                            "
+                                                            class="ml-2" />
+                                                        <UpTrend
+                                                            v-else
+                                                            class="ml-2" />
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
@@ -101,21 +119,37 @@ defineProps({
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                          {{ item.user.name }}
+                                                        {{ item.user.name }}
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <SimpleLink :href="route('admin.transaction.edit', item.id)">
-                                                            Edit
-                                                        </SimpleLink>/
-                                                        <SimpleLink :href="route('admin.transaction.show', item.id)">
+                                                        <SimpleLink
+                                                            :href="
+                                                                route(
+                                                                    'admin.transaction.edit',
+                                                                    item.id
+                                                                )
+                                                            ">
+                                                            Edit </SimpleLink
+                                                        >/
+                                                        <SimpleLink
+                                                            :href="
+                                                                route(
+                                                                    'admin.transaction.show',
+                                                                    item.id
+                                                                )
+                                                            ">
                                                             View
                                                         </SimpleLink>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <div v-if="transactions.meta.last_page > 1" class="py-6 px-6">
+                                        <div
+                                            v-if="
+                                                transactions.meta.last_page > 1
+                                            "
+                                            class="py-6 px-6">
                                             <Pagination
                                                 :pagination="transactions" />
                                         </div>

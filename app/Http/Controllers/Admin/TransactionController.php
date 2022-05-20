@@ -9,11 +9,13 @@ use App\Models\Sanctioner;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\FinancialYear;
+use App\Exports\TransactionsExport;
 use App\Http\Controllers\Controller;
 use App\Actions\Fundutiz\FundBalance;
 use App\Http\Resources\v1\FundResource;
 use App\Http\Resources\v1\SanctionerResource;
 use App\Http\Resources\v1\TransactionResource;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransactionController extends Controller
 {
@@ -183,5 +185,10 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction)
     {
         //
+    }
+
+
+    public function downloadReport(){
+        return Excel::download( new TransactionsExport, 'transactions.xlsx');
     }
 }

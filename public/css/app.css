@@ -2292,6 +2292,11 @@ select {
     padding-bottom: 3rem;
   }
 
+  .sm\:py-4 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
   .sm\:pt-0 {
     padding-top: 0px;
   }
