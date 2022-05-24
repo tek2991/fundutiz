@@ -189,6 +189,12 @@ class TransactionController extends Controller
 
 
     public function downloadReport(){
-        return Excel::download( new TransactionsExport, 'transactions.xlsx');
+        $user = auth()->user();
+        $current_team = $user->currentTeam;
+        $transactions = Transaction::where('team_id', $current_team->id)->get();
+
+        $export = new TransactionsExport($transactions);
+
+        return Excel::download($export, 'transactions.xlsx');
     }
 }

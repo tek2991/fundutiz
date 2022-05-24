@@ -26,8 +26,8 @@ defineProps({
         </template>
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex p-4">
-            <ButtonLink :href="route('admin.transaction.download-report')"
-                >Download</ButtonLink
+            <a :href="route('admin.transaction.download-report')"
+                >Download</a
             >
         </div>
 
@@ -58,12 +58,12 @@ defineProps({
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        class="truncate px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">
+                                                        class="truncate px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">
                                                         Amount
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        class="truncate px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">
+                                                        class="truncate px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">
                                                         Dated
                                                     </th>
                                                     <th
