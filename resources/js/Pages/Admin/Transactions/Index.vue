@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import ButtonLink from "@/Jetstream/ButtonLink.vue";
+import DownloadButton from "@/Jetstream/DownloadButton.vue";
 import SimpleLink from "@/Jetstream/SimpleLink.vue";
 import Pagination from "@/Jetstream/Pagination.vue";
 import SuccessBadge from "@/Icons/SuccessBadge.vue";
@@ -26,8 +27,8 @@ defineProps({
         </template>
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex p-4">
-            <a :href="route('admin.transaction.download-report')"
-                >Download</a
+            <DownloadButton :href="route('admin.transaction.download-report')"
+                >Download</DownloadButton
             >
         </div>
 
