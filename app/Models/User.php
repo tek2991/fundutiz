@@ -67,4 +67,9 @@ class User extends Authenticatable
     public function is_admin(){
         return $this->email === config('constants.admin_email');
     }
+
+    public function TeamInvitations()
+    {
+        return $this->hasMany(TeamInvitation::class, 'email', 'email');
+    }
 }
