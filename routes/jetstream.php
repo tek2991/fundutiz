@@ -1,18 +1,20 @@
 <?php
 
+use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Route;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
-use Laravel\Jetstream\Http\Controllers\Inertia\ApiTokenController;
-use Laravel\Jetstream\Http\Controllers\Inertia\CurrentUserController;
-use Laravel\Jetstream\Http\Controllers\Inertia\OtherBrowserSessionsController;
-use Laravel\Jetstream\Http\Controllers\Inertia\PrivacyPolicyController;
-use Laravel\Jetstream\Http\Controllers\Inertia\ProfilePhotoController;
+use App\Http\Controllers\Inertia\InertiaUserProfileController;
 use Laravel\Jetstream\Http\Controllers\Inertia\TeamController;
-use Laravel\Jetstream\Http\Controllers\Inertia\TeamMemberController;
-use Laravel\Jetstream\Http\Controllers\Inertia\TermsOfServiceController;
-use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController;
-use Laravel\Jetstream\Jetstream;
+use App\Http\Controllers\Inertia\InertiaTeamInvitationController;
+use Laravel\Jetstream\Http\Controllers\Inertia\ApiTokenController;
+use Laravel\Jetstream\Http\Controllers\Inertia\TeamMemberController;
+use Laravel\Jetstream\Http\Controllers\Inertia\CurrentUserController;
+use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
+use Laravel\Jetstream\Http\Controllers\Inertia\ProfilePhotoController;
+use Laravel\Jetstream\Http\Controllers\Inertia\PrivacyPolicyController;
+use Laravel\Jetstream\Http\Controllers\Inertia\TermsOfServiceController;
+use Laravel\Jetstream\Http\Controllers\Inertia\OtherBrowserSessionsController;
 
 Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
     if (Jetstream::hasTermsAndPrivacyPolicyFeature()) {
@@ -21,27 +23,27 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
     }
 
     $authMiddleware = config('jetstream.guard')
-            ? 'auth:'.config('jetstream.guard')
-            : 'auth';
+        ? 'auth:' . config('jetstream.guard')
+        : 'auth';
 
     $authSessionMiddleware = config('jetstream.auth_session', false)
-            ? config('jetstream.auth_session')
-            : null;
+        ? config('jetstream.auth_session')
+        : null;
 
     Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware, 'verified']))], function () {
         // User & Profile...
-        Route::get('/user/profile', [UserProfileController::class, 'show'])
-                    ->name('profile.show');
+        Route::get('/user/profile', [InertiaUserProfileController::class, 'showProfile'])
+            ->name('profile.show');
 
         Route::delete('/user/other-browser-sessions', [OtherBrowserSessionsController::class, 'destroy'])
-                    ->name('other-browser-sessions.destroy');
+            ->name('other-browser-sessions.destroy');
 
         Route::delete('/user/profile-photo', [ProfilePhotoController::class, 'destroy'])
-                    ->name('current-user-photo.destroy');
+            ->name('current-user-photo.destroy');
 
         if (Jetstream::hasAccountDeletionFeatures()) {
             Route::delete('/user', [CurrentUserController::class, 'destroy'])
-                        ->name('current-user.destroy');
+                ->name('current-user.destroy');
         }
 
         // API...
@@ -65,11 +67,14 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             Route::delete('/teams/{team}/members/{user}', [TeamMemberController::class, 'destroy'])->name('team-members.destroy');
 
             Route::get('/team-invitations/{invitation}', [TeamInvitationController::class, 'accept'])
-                        ->middleware(['signed'])
-                        ->name('team-invitations.accept');
+                ->middleware(['signed'])
+                ->name('team-invitations.accept');
 
             Route::delete('/team-invitations/{invitation}', [TeamInvitationController::class, 'destroy'])
-                        ->name('team-invitations.destroy');
+                ->name('team-invitations.destroy');
+
+            Route::post('/accept-team-invitations/{invitation}', [InertiaTeamInvitationController::class, 'acceptInvitation'])
+                ->name('accept-team-invitations.accept');
         }
     });
 });

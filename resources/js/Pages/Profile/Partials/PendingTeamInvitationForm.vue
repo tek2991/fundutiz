@@ -1,13 +1,22 @@
 <script setup>
+import JetSectionBorder from "@/Jetstream/SectionBorder.vue";
+import JetActionSection from "@/Jetstream/ActionSection.vue";
+import { Inertia } from '@inertiajs/inertia';
+
+const props = defineProps({
+    userTeamInvitations: Array,
+});
+
+const acceptTeamInvitation = (invitation) => {
+    Inertia.post(route("accept-team-invitations.accept", invitation), {
+        preserveScroll: true,
+    });
+};
 
 </script>
 
 <template>
-    <div
-        v-if="
-            team.team_invitations.length > 0 &&
-            userPermissions.canAddTeamMembers
-        ">
+    <div v-if="userTeamInvitations.length > 0">
         <JetSectionBorder />
 
         <!-- Team Member Invitations -->
@@ -15,8 +24,8 @@
             <template #title> Pending Team Invitations </template>
 
             <template #description>
-                You have been invited to join these teams and have been sent
-                an invitation email. They may join the team by accepting the
+                You have been invited to join these teams and have been sent an
+                invitation email. They may join the team by accepting the
                 invitation.
             </template>
 
@@ -24,20 +33,20 @@
             <template #content>
                 <div class="space-y-6">
                     <div
-                        v-for="invitation in team.team_invitations"
+                        v-for="invitation in userTeamInvitations"
                         :key="invitation.id"
                         class="flex items-center justify-between">
                         <div class="text-gray-600">
-                            {{ invitation.email }}
+                            {{ invitation.team.name }}
                         </div>
 
                         <div class="flex items-center">
                             <!-- Cancel Team Invitation -->
                             <button
-                                v-if="userPermissions.canRemoveTeamMembers"
-                                class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none"
-                                @click="cancelTeamInvitation(invitation)">
-                                Cancel
+                                v-if="true"
+                                class="cursor-pointer ml-6 text-sm font-bold text-green-500 focus:outline-none"
+                                @click="acceptTeamInvitation(invitation)">
+                                Accept
                             </button>
                         </div>
                     </div>
