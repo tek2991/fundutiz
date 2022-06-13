@@ -1689,9 +1689,6 @@ select {
 .font-normal {
   font-weight: 400;
 }
-.font-extrabold {
-  font-weight: 800;
-}
 .uppercase {
   text-transform: uppercase;
 }

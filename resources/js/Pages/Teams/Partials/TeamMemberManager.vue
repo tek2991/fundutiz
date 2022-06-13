@@ -237,7 +237,7 @@ const displayableRole = (role) => {
                             <div class="flex items-center">
                                 <img class="w-8 h-8 rounded-full" :src="user.profile_photo_url" :alt="user.name">
                                 <div class="ml-4">
-                                    {{ user.name }}
+                                    {{ user.name }} ({{ user.email }})
                                 </div>
                             </div>
 
