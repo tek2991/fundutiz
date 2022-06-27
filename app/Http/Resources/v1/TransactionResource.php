@@ -32,6 +32,7 @@ class TransactionResource extends JsonResource
             'sanctioner' => new SanctionerResource($this->sanctioner),
             'user' => new UserResource($this->lastUser),
             'financialYear' => new FinancialYearResource($this->financialYear),
+            'oa_name' => $this->oa_name,
         ];
     }
 }

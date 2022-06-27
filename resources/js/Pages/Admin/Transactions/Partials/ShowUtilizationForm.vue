@@ -27,6 +27,7 @@ const form = ref({
     gem_non_availability: props.transaction.gem_non_availability,
     gem_non_availability_remark: props.transaction.gem_non_availability_remark,
     sanctioner_id: props.transaction.sanctioner.id,
+    oa_name: props.transaction.oa_name,
 });
 
 const submit = () => {
@@ -34,14 +35,22 @@ const submit = () => {
 };
 
 const isGEM = computed(() => form.value.is_gem === "1");
-const isNotAvailableInGEM = computed(() => form.value.gem_non_availability === "1");
+const isNotAvailableInGEM = computed(
+    () => form.value.gem_non_availability === "1"
+);
 const isOtherReason = computed(() => form.value.gem_non_availability === "0");
-
 </script>
 
 <template>
     <JetFormSection @submitted="submit">
-        <template #title> Budget Utilization Entry (FY: {{ $page.props.current_financial_year ? $page.props.current_financial_year.name : 'N/A' }}) </template>
+        <template #title>
+            Budget Utilization Entry (FY:
+            {{
+                $page.props.current_financial_year
+                    ? $page.props.current_financial_year.name
+                    : "N/A"
+            }})
+        </template>
 
         <template #description>
             Create a new transaction for recording a budget utilization.
@@ -52,6 +61,15 @@ const isOtherReason = computed(() => form.value.gem_non_availability === "0");
                 class="col-span-6 sm:col-span-4 text-lg font-medium text-gray-900">
                 File Details
             </h3>
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="oa_name" value="OA Name" />
+                <JetInput
+                    id="oa_name"
+                    v-model="form.oa_name"
+                    type="text"
+                    class="block w-full mt-1"
+                    disabled />
+            </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="fund_id" value="Head Of Account" />
                 <Select v-model="form.fund_id" id="fund_id" disabled>
@@ -94,10 +112,7 @@ const isOtherReason = computed(() => form.value.gem_non_availability === "0");
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="status" value="Utilization Status" />
-                <Select
-                    v-model="form.status"
-                    id="status"
-                    disabled>
+                <Select v-model="form.status" id="status" disabled>
                     <option value="incured">Incured</option>
                     <option value="proposed">Proposed</option>
                 </Select>
@@ -145,13 +160,11 @@ const isOtherReason = computed(() => form.value.gem_non_availability === "0");
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="is_gem" value="Purchased From GEM ?" />
-                <Select v-model="form.is_gem" id="is_gem" disabled >
+                <Select v-model="form.is_gem" id="is_gem" disabled>
                     <option value="1" :selected="form.is_gem == '1'">
                         Yes
                     </option>
-                    <option value="0" :selected="form.is_gem == '0'">
-                        No
-                    </option>
+                    <option value="0" :selected="form.is_gem == '0'">No</option>
                 </Select>
             </div>
             <div v-if="!isGEM" class="col-span-6 sm:col-span-4">
@@ -160,7 +173,8 @@ const isOtherReason = computed(() => form.value.gem_non_availability === "0");
                     value="Reason For Local Purchase" />
                 <Select
                     v-model="form.gem_non_availability"
-                    id="gem_non_availability" disabled >
+                    id="gem_non_availability"
+                    disabled>
                     <option value="" selected disabled>Select</option>
                     <option
                         value="1"
@@ -182,7 +196,8 @@ const isOtherReason = computed(() => form.value.gem_non_availability === "0");
                     id="gem_non_availability_remark"
                     v-model="form.gem_non_availability_remark"
                     type="text"
-                    class="block w-full mt-1" disabled />
+                    class="block w-full mt-1"
+                    disabled />
             </div>
             <div v-if="isOtherReason" class="col-span-6 sm:col-span-4">
                 <JetLabel for="non_gem_remark" value="Reason.." />
@@ -190,13 +205,15 @@ const isOtherReason = computed(() => form.value.gem_non_availability === "0");
                     id="non_gem_remark"
                     v-model="form.non_gem_remark"
                     type="text"
-                    class="block w-full mt-1" 
+                    class="block w-full mt-1"
                     disabled />
             </div>
         </template>
 
         <template #actions>
-            <ButtonLink :href="route('admin.transaction.edit', transaction.id)"> Edit </ButtonLink>
+            <ButtonLink :href="route('admin.transaction.edit', transaction.id)">
+                Edit
+            </ButtonLink>
         </template>
     </JetFormSection>
 </template>

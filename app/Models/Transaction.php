@@ -32,6 +32,7 @@ class Transaction extends Model
         'sanctioner_id',
         'user_id',
         'financial_year_id',
+        'oa_name',
     ];
 
     /**

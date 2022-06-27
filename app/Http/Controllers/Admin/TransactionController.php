@@ -71,6 +71,7 @@ class TransactionController extends Controller
             'gem_non_availability_remark' => ['nullable', 'string', 'max:255'],
             'non_gem_remark' => ['nullable', 'string', 'max:255'],
             'sanctioner_id' => ['nullable', 'exists:sanctioners,id'],
+            'oa_name' => ['nullable', 'string', 'max:255'],
         ]);
 
         $fund = Fund::findOrFail($request->fund_id);
@@ -151,6 +152,7 @@ class TransactionController extends Controller
             'gem_non_availability_remark' => ['nullable', 'string', 'max:255'],
             'non_gem_remark' => ['nullable', 'string', 'max:255'],
             'sanctioner_id' => ['nullable', 'exists:sanctioners,id'],
+            'oa_name' => ['nullable', 'string', 'max:255'],
         ]);
 
         $fund = Fund::findOrFail($request->fund_id);

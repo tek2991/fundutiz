@@ -28,10 +28,13 @@ const form = useForm({
     gem_non_availability: "",
     gem_non_availability_remark: "",
     sanctioner_id: "",
+    oa_name: "",
 });
 
 const selectedFund = computed(() => {
-    return form.fund_id ? props.funds.find((fund) => fund.id == form.fund_id) : null;
+    return form.fund_id
+        ? props.funds.find((fund) => fund.id == form.fund_id)
+        : null;
 });
 
 const submit = () => {
@@ -61,13 +64,22 @@ watch(isNotAvailableInGEM, (value) => {
 
 <template>
     <JetFormSection @submitted="submit">
-        <template #title> Budget Utilization Entry (FY: {{ $page.props.current_financial_year ? $page.props.current_financial_year.name : 'N/A' }}) </template>
+        <template #title>
+            Budget Utilization Entry (FY:
+            {{
+                $page.props.current_financial_year
+                    ? $page.props.current_financial_year.name
+                    : "N/A"
+            }})
+        </template>
 
         <template #description>
-            Create a new transaction for recording a budget utilization. <br>
+            Create a new transaction for recording a budget utilization. <br />
             <span v-if="selectedFund">
                 <h3 class="text-lg font-semibold py-3">
-                    Current Balance ({{ selectedFund.name }}): ₹{{ selectedFund ? selectedFund.current_balance : 'N/A' }}
+                    Current Balance ({{ selectedFund.name }}): ₹{{
+                        selectedFund ? selectedFund.current_balance : "N/A"
+                    }}
                 </h3>
             </span>
         </template>
@@ -77,6 +89,18 @@ watch(isNotAvailableInGEM, (value) => {
                 class="col-span-6 sm:col-span-4 text-lg font-medium text-gray-900">
                 File Details
             </h3>
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="oa_name" value="OA Name" />
+                <JetInput
+                    id="oa_name"
+                    v-model="form.oa_name"
+                    type="text"
+                    class="block w-full mt-1"
+                    required />
+                <JetInputError
+                    :message="form.errors.oa_name"
+                    class="mt-2" />
+            </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="fund_id" value="Head Of Account" />
                 <Select v-model="form.fund_id" id="fund_id" required>
@@ -127,10 +151,7 @@ watch(isNotAvailableInGEM, (value) => {
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="status" value="Utilization Status" />
-                <Select
-                    v-model="form.status"
-                    id="status"
-                    required>
+                <Select v-model="form.status" id="status" required>
                     <option value="incured">Incured</option>
                     <option value="proposed">Proposed</option>
                 </Select>
@@ -190,9 +211,7 @@ watch(isNotAvailableInGEM, (value) => {
                     <option value="1" :selected="form.is_gem == '1'">
                         Yes
                     </option>
-                    <option value="0" :selected="form.is_gem == '0'">
-                        No
-                    </option>
+                    <option value="0" :selected="form.is_gem == '0'">No</option>
                 </Select>
                 <JetInputError :message="form.errors.is_gem" class="mt-2" />
             </div>

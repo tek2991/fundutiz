@@ -29,10 +29,13 @@ const form = useForm({
     gem_non_availability: props.transaction.gem_non_availability,
     gem_non_availability_remark: props.transaction.gem_non_availability_remark,
     sanctioner_id: props.transaction.sanctioner.id,
+    oa_name: props.transaction.oa_name,
 });
 
 const selectedFund = computed(() => {
-    return form.fund_id ? props.funds.find((fund) => fund.id == form.fund_id) : null;
+    return form.fund_id
+        ? props.funds.find((fund) => fund.id == form.fund_id)
+        : null;
 });
 
 const submit = () => {
@@ -87,6 +90,18 @@ watch(isNotAvailableInGEM, (value) => {
                 class="col-span-6 sm:col-span-4 text-lg font-medium text-gray-900">
                 File Details
             </h3>
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="oa_name" value="OA Name" />
+                <JetInput
+                    id="oa_name"
+                    v-model="form.oa_name"
+                    type="text"
+                    class="block w-full mt-1"
+                    required />
+                <JetInputError
+                    :message="form.errors.oa_name"
+                    class="mt-2" />
+            </div>
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="fund_id" value="Head Of Account" />
                 <Select v-model="form.fund_id" id="fund_id" required>
