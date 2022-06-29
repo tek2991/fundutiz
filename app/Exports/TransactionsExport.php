@@ -43,6 +43,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping
             'gem_non_availability_remark',
             'sanctioner',
             'financial_year',
+            'oa_name',
             'last_updated_by',
             'last_updated_at',
         ];
@@ -65,8 +66,9 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping
             $transaction->non_gem_remark,
             $transaction->gem_non_availability ? 'Yes' : 'No',
             $transaction->gem_non_availability_remark,
-            $transaction->sanctioner->name,
+            $transaction->sanctioner ? $transaction->sanctioner->name : 'NA',
             $transaction->financialYear->name,
+            $transaction->oa_name,
             $transaction->lastUser->name,
             $transaction->updated_at->format('d/m/Y'),
         ];
