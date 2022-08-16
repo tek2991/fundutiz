@@ -25,7 +25,7 @@ const props = defineProps({
 
 const sortables = [
     { key: "sanctioned_at", label: "Sanctioned At" },
-    { key: "amount", label: "Amount" },
+    { key: "amount_in_cents", label: "Amount" },
     { key: "fund.name", label: "Head Of Account" },
     { key: "user", label: "User" },
 ];

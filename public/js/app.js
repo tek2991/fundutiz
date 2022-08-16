@@ -2674,7 +2674,7 @@ __webpack_require__.r(__webpack_exports__);
       key: "sanctioned_at",
       label: "Sanctioned At"
     }, {
-      key: "amount",
+      key: "amount_in_cents",
       label: "Amount"
     }, {
       key: "fund.name",

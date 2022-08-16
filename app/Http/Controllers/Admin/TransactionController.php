@@ -38,7 +38,7 @@ class TransactionController extends Controller
             'from' => 'nullable|date',
             'to' => 'nullable|date',
             'financial_year_id' => 'nullable|exists:financial_years,id',
-            'sort_by' => 'nullable|in:fund_id,sanctioned_at,amount,user_id',
+            'sort_by' => 'nullable|in:fund_id,sanctioned_at,amount_in_cents,user_id',
             'sort_direction' => 'nullable|in:asc,desc',
         ]);
         $transactions = Transaction::query();
