@@ -63,7 +63,7 @@ class TransactionController extends Controller
         $funds = FundResource::collection(Fund::all());
         $users = UserResource::collection($current_team->users);
         $financialYears = FinancialYearResource::collection(FinancialYear::all());
-        return Inertia::render('Admin/Transactions/Index', compact('transactions', 'funds', 'users', 'financialYears'));
+        return Inertia::render('Admin/Transactions/Index', compact('transactions', 'funds', 'users', 'financialYears', 'request'));
     }
 
     /**

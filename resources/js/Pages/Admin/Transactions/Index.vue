@@ -20,6 +20,7 @@ const props = defineProps({
     funds: Object,
     financialYears: Object,
     current_financial_year: Object,
+    request: Object,
 });
 
 const sortables = [
@@ -32,10 +33,10 @@ const sort_directions = ["asc", "desc"];
 
 const form = useForm({
     financial_year_id: props.current_financial_year.id,
-    fund_id: "",
-    user_id: "",
-    sort_by: "sanctioned_at",
-    sort_direction: "desc",
+    fund_id: props.request.fund_id ?? "",
+    user_id: props.request.user_id ?? "",
+    sort_by: props.request.sort_by ?? "sanctioned_at",
+    sort_direction: props.request.sort_direction ?? "desc",
 });
 
 const submit = () => {
@@ -65,7 +66,7 @@ const submit = () => {
                     v-model="form.financial_year_id"
                     id="financial_year_id"
                     required>
-                    <option value="" disabled>All</option>
+                    <option value="">All</option>
                     <option
                         :value="financial_year.id"
                         v-for="financial_year in financialYears"
@@ -80,7 +81,7 @@ const submit = () => {
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="fund_id" value="Head Of Account" />
                 <Select v-model="form.fund_id" id="fund_id" required>
-                    <option value="" disabled>Select</option>
+                    <option value="">All</option>
                     <option
                         :value="fund.id"
                         v-for="fund in funds"
@@ -93,7 +94,7 @@ const submit = () => {
             <div class="col-span-6 sm:col-span-4">
                 <JetLabel for="user_id" value="User" />
                 <Select v-model="form.user_id" id="user_id" required>
-                    <option value="" disabled>All</option>
+                    <option value="">All</option>
                     <option
                         :value="user.id"
                         v-for="user in users"

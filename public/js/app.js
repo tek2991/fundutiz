@@ -2661,9 +2661,12 @@ __webpack_require__.r(__webpack_exports__);
     users: Object,
     funds: Object,
     financialYears: Object,
-    current_financial_year: Object
+    current_financial_year: Object,
+    request: Object
   },
   setup: function setup(__props, _ref) {
+    var _props$request$fund_i, _props$request$user_i, _props$request$sort_b, _props$request$sort_d;
+
     var expose = _ref.expose;
     expose();
     var props = __props;
@@ -2683,10 +2686,10 @@ __webpack_require__.r(__webpack_exports__);
     var sort_directions = ["asc", "desc"];
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm)({
       financial_year_id: props.current_financial_year.id,
-      fund_id: "",
-      user_id: "",
-      sort_by: "sanctioned_at",
-      sort_direction: "desc"
+      fund_id: (_props$request$fund_i = props.request.fund_id) !== null && _props$request$fund_i !== void 0 ? _props$request$fund_i : "",
+      user_id: (_props$request$user_i = props.request.user_id) !== null && _props$request$user_i !== void 0 ? _props$request$user_i : "",
+      sort_by: (_props$request$sort_b = props.request.sort_by) !== null && _props$request$sort_b !== void 0 ? _props$request$sort_b : "sanctioned_at",
+      sort_direction: (_props$request$sort_d = props.request.sort_direction) !== null && _props$request$sort_d !== void 0 ? _props$request$sort_d : "desc"
     });
 
     var submit = function submit() {
@@ -9488,8 +9491,7 @@ var _hoisted_5 = {
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "",
-  disabled: ""
+  value: ""
 }, "All", -1
 /* HOISTED */
 );
@@ -9500,9 +9502,8 @@ var _hoisted_8 = {
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "",
-  disabled: ""
-}, "Select", -1
+  value: ""
+}, "All", -1
 /* HOISTED */
 );
 
@@ -9512,8 +9513,7 @@ var _hoisted_11 = {
 };
 
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "",
-  disabled: ""
+  value: ""
 }, "All", -1
 /* HOISTED */
 );
