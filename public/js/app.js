@@ -2671,16 +2671,16 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var props = __props;
     var sortables = [{
+      key: "fund_id",
+      label: "Head Of Account"
+    }, {
       key: "sanctioned_at",
       label: "Sanctioned At"
     }, {
       key: "amount_in_cents",
       label: "Amount"
     }, {
-      key: "fund.name",
-      label: "Head Of Account"
-    }, {
-      key: "user",
+      key: "user_id",
       label: "User"
     }];
     var sort_directions = ["asc", "desc"];
