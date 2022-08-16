@@ -1,4 +1,7 @@
 <script setup>
+import { useForm } from "@inertiajs/inertia-vue3";
+import { computed } from "vue";
+
 import AppLayout from "@/Layouts/AppLayout.vue";
 import ButtonLink from "@/Jetstream/ButtonLink.vue";
 import DownloadButton from "@/Jetstream/DownloadButton.vue";
@@ -7,10 +10,39 @@ import Pagination from "@/Jetstream/Pagination.vue";
 import SuccessBadge from "@/Icons/SuccessBadge.vue";
 import Cart from "@/Icons/Cart.vue";
 import UpTrend from "@/Icons/UpTrend.vue";
+import JetInputError from "@/Jetstream/InputError.vue";
+import JetLabel from "@/Jetstream/Label.vue";
+import Select from "@/Jetstream/Select.vue";
 
-defineProps({
+const props = defineProps({
     transactions: Object,
+    users: Object,
+    funds: Object,
+    financialYears: Object,
+    current_financial_year: Object,
 });
+
+const sortables = [
+    { key: "sanctioned_at", label: "Sanctioned At" },
+    { key: "amount", label: "Amount" },
+    { key: "fund.name", label: "Head Of Account" },
+    { key: "user", label: "User" },
+];
+const sort_directions = ["asc", "desc"];
+
+const form = useForm({
+    financial_year_id: props.current_financial_year.id,
+    fund_id: "",
+    user_id: "",
+    sort_by: "sanctioned_at",
+    sort_direction: "desc",
+});
+
+const submit = () => {
+    form.get(route("admin.transaction.index"), {
+        errorBag: "indexTransactions",
+    });
+};
 </script>
 
 <template>
@@ -26,10 +58,88 @@ defineProps({
             </span>
         </template>
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex p-4">
-            <DownloadButton :href="route('admin.transaction.download-report')"
-                >Download</DownloadButton
-            >
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex p-4 gap-4">
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="financial_year_id" value="Financial Year" />
+                <Select
+                    v-model="form.financial_year_id"
+                    id="financial_year_id"
+                    required>
+                    <option value="" disabled>All</option>
+                    <option
+                        :value="financial_year.id"
+                        v-for="financial_year in financialYears"
+                        :key="financial_year.id">
+                        {{ financial_year.name }}
+                    </option>
+                </Select>
+                <JetInputError
+                    :message="form.errors.financial_year_id"
+                    class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="fund_id" value="Head Of Account" />
+                <Select v-model="form.fund_id" id="fund_id" required>
+                    <option value="" disabled>Select</option>
+                    <option
+                        :value="fund.id"
+                        v-for="fund in funds"
+                        :key="fund.id">
+                        {{ fund.name }}
+                    </option>
+                </Select>
+                <JetInputError :message="form.errors.fund_id" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="user_id" value="User" />
+                <Select v-model="form.user_id" id="user_id" required>
+                    <option value="" disabled>All</option>
+                    <option
+                        :value="user.id"
+                        v-for="user in users"
+                        :key="user.id">
+                        {{ user.name }}
+                    </option>
+                </Select>
+                <JetInputError :message="form.errors.user_id" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="sort_by" value="Sort By" />
+                <Select v-model="form.sort_by" id="sort_by" required>
+                    <option value="" disabled>Select</option>
+                    <option
+                        :value="sortable.key"
+                        v-for="sortable in sortables"
+                        :key="sortable.key">
+                        {{ sortable.label }}
+                    </option>
+                </Select>
+                <JetInputError :message="form.errors.sort_by" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="sort_direction" value="Sort Direction" />
+                <Select
+                    v-model="form.sort_direction"
+                    id="sort_direction"
+                    required>
+                    <option value="" disabled>Select</option>
+                    <option
+                        :value="sort_direction"
+                        v-for="sort_direction in sort_directions"
+                        :key="sort_direction">
+                        {{ sort_direction }}
+                    </option>
+                </Select>
+                <JetInputError
+                    :message="form.errors.sort_direction"
+                    class="mt-2" />
+            </div>
+            <ButtonLink href="#" class="h-10 mt-5" @click.prevent="submit">
+                Submit
+            </ButtonLink>
+            <DownloadButton :href="route('admin.transaction.download-report')" class="h-10 mt-5">
+                Download All
+            </DownloadButton>
         </div>
 
         <div class="">
@@ -65,7 +175,7 @@ defineProps({
                                                     <th
                                                         scope="col"
                                                         class="truncate px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">
-                                                        Dated
+                                                        Sanction Date
                                                     </th>
                                                     <th
                                                         scope="col"

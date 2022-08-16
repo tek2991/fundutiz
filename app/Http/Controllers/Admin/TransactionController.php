@@ -11,11 +11,13 @@ use Illuminate\Http\Request;
 use App\Models\FinancialYear;
 use App\Exports\TransactionsExport;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Actions\Fundutiz\FundBalance;
 use App\Http\Resources\v1\FundResource;
+use App\Http\Resources\v1\UserResource;
 use App\Http\Resources\v1\SanctionerResource;
 use App\Http\Resources\v1\TransactionResource;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Resources\v1\FinancialYearResource;
 
 class TransactionController extends Controller
 {
@@ -28,11 +30,40 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $current_team_id = auth()->user()->currentTeam->id;
-        $transactions = TransactionResource::collection(Transaction::where('team_id', $current_team_id)->orderBy('updated_at', 'desc')->paginate());
-        return Inertia::render('Admin/Transactions/Index', compact('transactions'));
+        $this->validate($request, [
+            'fund_id' => 'nullable|exists:funds,id',
+            'user_id' => 'nullable|exists:sanctioners,id',
+            'from' => 'nullable|date',
+            'to' => 'nullable|date',
+            'financial_year_id' => 'nullable|exists:financial_years,id',
+            'sort_by' => 'nullable|in:fund_id,sanctioned_at,amount,user_id',
+            'sort_direction' => 'nullable|in:asc,desc',
+        ]);
+        $transactions = Transaction::query();
+        if ($request->filled('fund_id')) {
+            $transactions->where('fund_id', $request->fund_id);
+        }
+        if ($request->filled('user_id')) {
+            $transactions->where('user_id', $request->user_id);
+        }
+        if ($request->filled('from')) {
+            $transactions->where('sanctioned_at', '>=', $request->from);
+        }
+        if ($request->filled('to')) {
+            $transactions->where('sanctioned_at', '<=', $request->to);
+        }
+
+        $current_team = auth()->user()->currentTeam;
+        $transactions = $transactions->where('team_id', $current_team->id)->where('financial_year_id', $request->financial_year_id ?? FinancialYear::current()->id);
+        $transactions = $transactions->orderBy($request->sort_by ?? 'sanctioned_at', $request->sort_direction ?? 'desc')->paginate();
+
+        $transactions = TransactionResource::collection($transactions);
+        $funds = FundResource::collection(Fund::all());
+        $users = UserResource::collection($current_team->users);
+        $financialYears = FinancialYearResource::collection(FinancialYear::all());
+        return Inertia::render('Admin/Transactions/Index', compact('transactions', 'funds', 'users', 'financialYears'));
     }
 
     /**
