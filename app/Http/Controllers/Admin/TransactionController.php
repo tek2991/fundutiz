@@ -221,10 +221,33 @@ class TransactionController extends Controller
     }
 
 
-    public function downloadReport(){
-        $user = auth()->user();
-        $current_team = $user->currentTeam;
-        $transactions = Transaction::where('team_id', $current_team->id)->get();
+    public function downloadReport(Request $request){
+        $this->validate($request, [
+            'fund_id' => 'nullable|exists:funds,id',
+            'user_id' => 'nullable|exists:sanctioners,id',
+            'from' => 'nullable|date',
+            'to' => 'nullable|date',
+            'financial_year_id' => 'nullable|exists:financial_years,id',
+            'sort_by' => 'nullable|in:fund_id,sanctioned_at,amount_in_cents,user_id',
+            'sort_direction' => 'nullable|in:asc,desc',
+        ]);
+        $transactions = Transaction::query();
+        if ($request->filled('fund_id')) {
+            $transactions->where('fund_id', $request->fund_id);
+        }
+        if ($request->filled('user_id')) {
+            $transactions->where('user_id', $request->user_id);
+        }
+        if ($request->filled('from')) {
+            $transactions->where('sanctioned_at', '>=', $request->from);
+        }
+        if ($request->filled('to')) {
+            $transactions->where('sanctioned_at', '<=', $request->to);
+        }
+
+        $current_team = auth()->user()->currentTeam;
+        $transactions = $transactions->where('team_id', $current_team->id)->where('financial_year_id', $request->financial_year_id ?? FinancialYear::current()->id);
+        $transactions = $transactions->orderBy($request->sort_by ?? 'sanctioned_at', $request->sort_direction ?? 'desc')->get();
 
         $export = new TransactionsExport($transactions);
 

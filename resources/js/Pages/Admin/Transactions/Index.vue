@@ -44,6 +44,23 @@ const submit = () => {
         errorBag: "indexTransactions",
     });
 };
+
+const params = computed(() => {
+    return {
+        financial_year_id: form.financial_year_id,
+        fund_id: form.fund_id,
+        user_id: form.user_id,
+        sort_by: form.sort_by,
+        sort_direction: form.sort_direction,
+    };
+});
+
+const download = () => {
+    window.location.href = route("admin.transaction.download-report", {
+        ...params.value,
+    });
+}
+
 </script>
 
 <template>
@@ -138,9 +155,12 @@ const submit = () => {
             <ButtonLink href="#" class="h-10 mt-5" @click.prevent="submit">
                 Submit
             </ButtonLink>
-            <DownloadButton :href="route('admin.transaction.download-report')" class="h-10 mt-5">
+            <ButtonLink href="#" class="h-10 mt-5" @click.prevent="download">
+                Download 
+            </ButtonLink>
+            <!-- <DownloadButton :href="route('admin.transaction.download-report')" class="h-10 mt-5">
                 Download All
-            </DownloadButton>
+            </DownloadButton> -->
         </div>
 
         <div class="">
