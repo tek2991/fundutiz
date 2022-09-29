@@ -57,7 +57,7 @@ class TransactionController extends Controller
 
         $current_team = auth()->user()->currentTeam;
         $transactions = $transactions->where('team_id', $current_team->id)->where('financial_year_id', $request->financial_year_id ?? FinancialYear::current()->id);
-        $transactions = $transactions->orderBy($request->sort_by ?? 'sanctioned_at', $request->sort_direction ?? 'desc')->paginate();
+        $transactions = $transactions->orderBy($request->sort_by ?? 'sanctioned_at', $request->sort_direction ?? 'desc')->paginate()->appends($request->all());
 
         $transactions = TransactionResource::collection($transactions);
         $funds = FundResource::collection(Fund::all());
