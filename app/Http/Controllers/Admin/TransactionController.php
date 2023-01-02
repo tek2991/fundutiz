@@ -110,11 +110,11 @@ class TransactionController extends Controller
         $financialYear = FinancialYear::current();
         $current_balance = FundBalance::current($fund, $current_team, $financialYear);
 
-        if ($request->type == 'utilization') {
-            if ($current_balance - $request->amount < 0) {
-                return redirect()->back()->dangerBanner('Utilization amount cannot be greater than fund balance!');
-            }
-        }
+        // if ($request->type == 'utilization') {
+        //     if ($current_balance - $request->amount < 0) {
+        //         return redirect()->back()->dangerBanner('Utilization amount cannot be greater than fund balance!');
+        //     }
+        // }
 
         $additional_fields = [
             'team_id' => $current_team->id,
@@ -191,11 +191,11 @@ class TransactionController extends Controller
         $financialYear = FinancialYear::current();
         $current_balance = FundBalance::current($fund, $current_team, $financialYear);
 
-        if ($request->type == 'utilization') {
-            if ($current_balance - $request->amount < 0) {
-                return redirect()->back()->dangerBanner('Utilization amount cannot be greater than fund balance!');
-            }
-        }
+        // if ($request->type == 'utilization') {
+        //     if ($current_balance - $request->amount < 0) {
+        //         return redirect()->back()->dangerBanner('Utilization amount cannot be greater than fund balance!');
+        //     }
+        // }
 
         $additional_fields = [
             'user_id' => auth()->user()->id,
